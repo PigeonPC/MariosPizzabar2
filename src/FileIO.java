@@ -27,17 +27,12 @@ public class FileIO {
             e.printStackTrace();
         }
 
-//        try {
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+
     }
 
     public ArrayList<Ordre> read() {
 
-        //izza tempPizza1 = new Pizza();
-        //Pizza tempPizza2 = new Pizza();
+
         ArrayList<Ordre> ordreList = new ArrayList<>();
 
         ObjectInputStream Oout = null;

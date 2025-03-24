@@ -37,16 +37,6 @@ public class Main {
         }
 
 
-
-        // fyldt pizzamenu op til stoerrelse 10
-        while (menuPizzaUdvalg.size() < 11) {
-            menuPizzaUdvalg.add(null);
-        }
-
-
-//        // smid pizza dummies i pizzamenu
-//        createPizzaDummies(menuPizzaUdvalg);
-
         menuPizzaUdvalg = Menukort.getMenu();
 
 
@@ -337,106 +327,10 @@ public class Main {
             }
         }
 
-
-
-
     }
 
-    public static void timeTest() {
-
-        Scanner scanner = new Scanner(System.in);
-
-        ArrayList<LocalDateTime> tiderTilComp = new ArrayList<LocalDateTime>();
-
-        LocalDateTime nowTimeNoFormat = LocalDateTime.now();
-        LocalDateTime nowTimeNoFormat30 = nowTimeNoFormat.plusMinutes(30);
-        LocalDateTime nowTimeNoFormat45 = nowTimeNoFormat.plusMinutes(45);
-        LocalDateTime nowTimeNoFormat55 = nowTimeNoFormat.plusMinutes(55);
-
-        tiderTilComp.add(nowTimeNoFormat45);
-        tiderTilComp.add(nowTimeNoFormat);
-        tiderTilComp.add(nowTimeNoFormat55);
-        tiderTilComp.add(nowTimeNoFormat30);
-
-        System.out.println(tiderTilComp);
 
 
-        LocalDateTime basis = LocalDateTime.now();
-        System.out.println(basis);
-
-        int inputHour = scanner.nextInt();
-
-        LocalDateTime basisNyHour = basis.withHour(inputHour);
-        int inputMinute = scanner.nextInt();
-
-        LocalDateTime basisNyMinute = basisNyHour.withMinute(inputMinute);
-
-        System.out.println(basisNyHour);
-
-        DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("HH:mm");
-
-
-//        LocalDateTime inputConv = LocalDateTime.parse(inputTime, inputFormat);
-//        System.out.println(inputConv);
-
-
-        System.out.println(nowTimeNoFormat);
-        System.out.println(nowTimeNoFormat30);
-
-
-
-        DateTimeFormatter formatDKTimeDate = DateTimeFormatter.ofPattern("ddMMyy HH:mm");
-        DateTimeFormatter formatDKTime = DateTimeFormatter.ofPattern("HH:mm");
-
-        String nowTimeFormatted = nowTimeNoFormat.format(formatDKTime);
-        String nowTimeFormatted30 = nowTimeNoFormat30.format(formatDKTimeDate);
-        String nowTimeFormatted45 = nowTimeNoFormat45.format(formatDKTime);
-        String nowTimeFormatted55 = nowTimeNoFormat55.format(formatDKTimeDate);
-        String nowTimeFormattedNy = basisNyMinute.format(formatDKTimeDate);
-
-
-
-
-        System.out.println(nowTimeFormatted);
-        System.out.println(nowTimeFormatted30);
-        System.out.println(nowTimeFormatted45);
-        System.out.println(nowTimeFormatted55);
-        System.out.println(nowTimeFormattedNy);
-
-
-        System.out.println(nowTimeFormatted.compareTo(nowTimeFormatted30));
-
-
-//        DateTimeFormatter nowTimeFromString =
-
-
-
-//        System.out.println(nowTimeNoFormat);
-
-
-    }
-
-    public static void createPizzaDummies(ArrayList<Pizza> menuPizzaUdvalg) {
-//        Pizza pizza3 = new Pizza("Margerita", 3, 25,
-//                new ArrayList<String>(Arrays.asList("Champignon",
-//                        "Tomat",
-//                        "Ost")),
-//                "");
-//        Pizza pizza6 = new Pizza("Vesuvio", 6, 35,
-//                new ArrayList<String>(Arrays.asList("Champignon",
-//                        "Tomat")),
-//                "");
-//
-//        Pizza pizza8 = new Pizza("Matador", 8, 39,
-//                new ArrayList<String>(Arrays.asList("Oksefilet",
-//                        "Bearnaise",
-//                        "Jaka bov",
-//                        "salami")),
-//                "");
-//        menuPizzaUdvalg.set(3, pizza3);
-//        menuPizzaUdvalg.set(6, pizza6);
-//        menuPizzaUdvalg.set(8, pizza8);
-    }
 
 
 
