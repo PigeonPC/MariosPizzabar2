@@ -240,7 +240,7 @@ public class Main {
 
                             kommentarPizza = HelpMethods.getValidatedTekstLaengde(40, true, scanner);
 
-                            tempOrdre.ordrePizzaListe.get(tempValg - 1).setComment(kommentarPizza);
+                            tempOrdre.ordrePizzaListe.get(tempValg - 1).setKommentar(kommentarPizza);
 
 
                         }
@@ -415,25 +415,25 @@ public class Main {
     }
 
     public static void createPizzaDummies(ArrayList<Pizza> menuPizzaUdvalg) {
-        Pizza pizza3 = new Pizza("Margerita", 3, 25,
-                new ArrayList<String>(Arrays.asList("Champignon",
-                        "Tomat",
-                        "Ost")),
-                "");
-        Pizza pizza6 = new Pizza("Vesuvio", 6, 35,
-                new ArrayList<String>(Arrays.asList("Champignon",
-                        "Tomat")),
-                "");
-
-        Pizza pizza8 = new Pizza("Matador", 8, 39,
-                new ArrayList<String>(Arrays.asList("Oksefilet",
-                        "Bearnaise",
-                        "Jaka bov",
-                        "salami")),
-                "");
-        menuPizzaUdvalg.set(3, pizza3);
-        menuPizzaUdvalg.set(6, pizza6);
-        menuPizzaUdvalg.set(8, pizza8);
+//        Pizza pizza3 = new Pizza("Margerita", 3, 25,
+//                new ArrayList<String>(Arrays.asList("Champignon",
+//                        "Tomat",
+//                        "Ost")),
+//                "");
+//        Pizza pizza6 = new Pizza("Vesuvio", 6, 35,
+//                new ArrayList<String>(Arrays.asList("Champignon",
+//                        "Tomat")),
+//                "");
+//
+//        Pizza pizza8 = new Pizza("Matador", 8, 39,
+//                new ArrayList<String>(Arrays.asList("Oksefilet",
+//                        "Bearnaise",
+//                        "Jaka bov",
+//                        "salami")),
+//                "");
+//        menuPizzaUdvalg.set(3, pizza3);
+//        menuPizzaUdvalg.set(6, pizza6);
+//        menuPizzaUdvalg.set(8, pizza8);
     }
 
 

@@ -7,6 +7,7 @@ public class Pizza {
     int pris;
     String[] ingredienser;
     String kommentar;
+    boolean pizzaFaerdig;
 
     //Adding constructor for pizza
     public Pizza(int nummer, String navn, int pris, String[] ingredienser, String comment) {

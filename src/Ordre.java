@@ -101,7 +101,7 @@ public class Ordre implements Serializable {
     }
 
     public void sorterOrdrePizzaListe() {
-        ordrePizzaListe.sort(Comparator.comparingInt(Pizza::getNummerPizza));
+        ordrePizzaListe.sort(Comparator.comparingInt(Pizza::getNummer));
     }
 
 
@@ -137,7 +137,7 @@ public class Ordre implements Serializable {
     public void opdaterTotalPrisOrdre() {
         prisTotalOrdre = 0;
         for (Pizza pizza : ordrePizzaListe) {
-            prisTotalOrdre += pizza.getPrice();
+            prisTotalOrdre += pizza.getPris();
         }
     }
 
