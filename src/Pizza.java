@@ -27,7 +27,7 @@ public class Pizza {
         this.nummer = that.nummer;
         this.navn = that.navn;
         this.pris = that.pris;
-        this.ingredienser = new String[ingredienser.length];
+        this.ingredienser = new String[that.ingredienser.length];
         for (int i = 0; i < that.ingredienser.length; i++) {
             this.ingredienser[i] = (that.ingredienser[i]);
         }
@@ -128,6 +128,9 @@ public class Pizza {
 
         //Adding price and currency
         string.append(pris + " kr.");
+
+        //Adding Klar eller ingenting alt efter om pizza er bagt faerdig
+        string.append((pizzaFaerdig) ? "Klar" : "");
 
         //If the comment is equal to null, it won't be added to the String Builder. If it isn't, it will be added underneath the information of the pizza object.
         if (!kommentar.equals("null")) {
