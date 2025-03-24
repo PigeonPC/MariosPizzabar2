@@ -44,8 +44,10 @@ public class Main {
         }
 
 
-        // smid pizza dummies i pizzamenu
-        createPizzaDummies(menuPizzaUdvalg);
+//        // smid pizza dummies i pizzamenu
+//        createPizzaDummies(menuPizzaUdvalg);
+
+        menuPizzaUdvalg = Menukort.getMenu();
 
 
         // menu dummy til test oprette og save ordrer
@@ -174,7 +176,7 @@ public class Main {
                         kommentarPizza = HelpMethods.getValidatedTekstLaengde(40, true, scanner);
 
                         if (!kommentarPizza.isEmpty()) {
-                            valgtPizza.setComment(kommentarPizza);
+                            valgtPizza.setKommentar(kommentarPizza);
                         }
 
                         tempOrdre.tilfoejPizzaTilOrdre(valgtPizza);
