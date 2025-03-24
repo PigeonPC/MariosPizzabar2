@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 public class Pizza {
 
@@ -7,6 +8,7 @@ public class Pizza {
     int pris;
     String[] ingredienser;
     String kommentar;
+    boolean pizzaFaerdig;
 
     //Adding constructor for pizza
     public Pizza(int nummer, String navn, int pris, String[] ingredienser, String comment) {
@@ -16,10 +18,35 @@ public class Pizza {
         this.pris = pris;
         this.ingredienser = ingredienser;
         this.kommentar = comment;
+        this.pizzaFaerdig = false;
+
+    }
+
+    public Pizza(Pizza that) {
+
+        this.nummer = that.nummer;
+        this.navn = that.navn;
+        this.pris = that.pris;
+        this.ingredienser = new String[ingredienser.length];
+        for (int i = 0; i < that.ingredienser.length; i++) {
+            this.ingredienser[i] = (that.ingredienser[i]);
+        }
+        this.kommentar = that.kommentar;
+        this.pizzaFaerdig = false;
+
+
 
     }
 
     //Getter and setters for all variables in Pizza
+    public boolean getPizzaFaerdig() {
+        return this.pizzaFaerdig;
+    }
+
+    public void setPizzaFaerdig(boolean pizzaFaerdig) {
+        this.pizzaFaerdig = pizzaFaerdig;
+    }
+
     public int getNummer() {
         return nummer;
     }
@@ -58,6 +85,11 @@ public class Pizza {
 
     public void setKommentar(String kommentar) {
         this.kommentar = kommentar;
+    }
+
+    public Pizza copyOf() {
+        return new Pizza(this);
+
     }
 
     //toString
