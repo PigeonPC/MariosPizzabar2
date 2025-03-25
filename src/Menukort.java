@@ -60,4 +60,42 @@ public class Menukort {
 
     }
 
+    //Method to add the ingredients to the ingredients ArrayList from the Ingredienser.txt file.
+    public static ArrayList getIngredienser() {
+
+        //The ingredient ArrayList is declared
+        ArrayList<String> ingredienser = new ArrayList<>();
+
+        //The content of the Ingredienser.txt is read and added to the menu ArrayList
+        try {
+            //To make sure it reads from the Menu.txt file
+            File myObj = new File("Ingredienser.txt");
+            Scanner myReader = new Scanner(myObj);
+
+            //The loop keeps running until there are no more lines
+            while (myReader.hasNextLine()) {
+                String ingrediens = myReader.nextLine();
+                ingredienser.add(ingrediens);
+            }
+            myReader.close();
+        }
+
+        //If an error occurs the following code is run.
+        catch (FileNotFoundException e) {
+            System.out.println("Der er sket en fejl under læsning af ingredienser.");
+            e.printStackTrace();
+        }
+
+        return ingredienser;
+    }
+
+    public static void visIngredienser(ArrayList<String> ingredienser) {
+
+        System.out.println("Ingrediensliste:");
+        for (String ingrediens : ingredienser) {
+            // Udskriver ingredienser
+            System.out.println(ingrediens);
+        }
+
+    }
 }
