@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Pizza {
+public class Pizza implements Serializable {
 
     //Declaring variables in Pizza
     int nummer;

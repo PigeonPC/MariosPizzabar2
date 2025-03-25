@@ -4,6 +4,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 import java.util.*;
 
+// class til ordre
+// implements Serializable for at gøre det muligt at streame indhold til fil med ObjectOutputStream
 public class Ordre implements Serializable {
 
     //VARIABLER
@@ -17,10 +19,10 @@ public class Ordre implements Serializable {
     private String tlfNummerKunde;
 
     //ORDRE CONSTRUCTOR
+    //Nok ikke i brug. Parametre, men tidspunkt for ordre sat til tidspunkt for creation
     public Ordre(LocalDateTime tidspunktForAfhentning, boolean erAfsluttet, String kommentar, double prisTotalOrdre, String tlfNummerKunde){
         this.tidspunktForOrdre = LocalDateTime.now();
         this.tidspunktForAfhentning = tidspunktForAfhentning;
-        //this.formatDK = DateTimeFormatter.ofPattern("ddMMyy HH:mm");
         this.ordrePizzaListe = new ArrayList<>();
         this.erAfsluttet = erAfsluttet;
         this.kommentar = kommentar;
@@ -28,15 +30,16 @@ public class Ordre implements Serializable {
         this.tlfNummerKunde = tlfNummerKunde;
     }
 
+    //ORDRE CONSTRUCTOR
+    //Denne uden parametre
     public Ordre() {
         this.tidspunktForOrdre = LocalDateTime.now();
         this.tidspunktForAfhentning = null;
-        //this.formatDK = DateTimeFormatter.ofPattern("ddMMyy HH:mm");
         this.ordrePizzaListe = new ArrayList<>();
         this.erAfsluttet = false;
         this.kommentar = "Ingen kommentarer";
         this.prisTotalOrdre = 0.0;
-        this.tlfNummerKunde = "Endnu ikke opgivet";;
+        this.tlfNummerKunde = "Endnu ikke opgivet";
     }
 
     //GETTERS
@@ -60,6 +63,10 @@ public class Ordre implements Serializable {
     }
     public String getTlfNummerKunde(){
         return this.tlfNummerKunde;
+    }
+
+    public ArrayList<Pizza> getOrdrePizzaListe() {
+        return ordrePizzaListe;
     }
 
     //SETTERS
@@ -86,32 +93,41 @@ public class Ordre implements Serializable {
         this.tlfNummerKunde = tlfNummerKunde;
     }
 
-    public ArrayList<Pizza> getOrdrePizzaListe() {
-        return ordrePizzaListe;
-    }
 
+
+    //Tilfoejer pizza i parameter til ordren og opdaterer ordrens pris
     public void tilfoejPizzaTilOrdre(Pizza pizza) {
         ordrePizzaListe.add(pizza);
         opdaterTotalPrisOrdre();
 
     }
 
+    //Fjerner alle pizzaer fra ordren
     public void toemOrdrePizzaListe() {
         ordrePizzaListe.clear();
     }
 
+    //Sorterer pizzaerne i ordren efter pizza nr
     public void sorterOrdrePizzaListe() {
+        //Bruger Comparator og lambda expression til at sortere pizzaer i ordrens pizza liste efter pizza nr via getter
         ordrePizzaListe.sort(Comparator.comparingInt(Pizza::getNummer));
     }
 
 
     //TO STRING METODE
+    //Denne skal nok tilpasses i layout efter at Ordre class og Pizza class er sat sammen
     public String toString() {
+
+        //Stringbuilder for lettere at bygge en omfattende String op
         StringBuilder tempString = new StringBuilder();
+
+        //formaterer LocalDateTime vaerdi til letlaeselig dato og tidspunkt for ordren via helper method i HelpMethods class
         tempString.append(String.format("\n%-35s %s", "Tidspunkt for ordrebestilling:", HelpMethods.formatDK(tidspunktForOrdre)));
 
+        //tilfoejer enten afhentningstidspunkt formateret via helper method i HelpMethods eller "Endnu ikke fastsat" hvis tidspunktet er null
         tempString.append(String.format("\n%-35s %s", "Afhentningstidspunkt:", (tidspunktForAfhentning != null) ? HelpMethods.formatDK(tidspunktForAfhentning) : "Endnu ikke fastsat"));
 
+        //tilfoejer enb af de to Strings alt efter om erAfslutter har vaerdien true eller false
         tempString.append(String.format("\n%-35s %s", "Status for ordre:", (!erAfsluttet) ? "Igangværende" : "Afsluttet"));
 
         tempString.append(String.format("\n%-35s %s", "Kommentar:", kommentar));
@@ -120,20 +136,24 @@ public class Ordre implements Serializable {
 
         tempString.append(String.format("\n%-35s %s", "Kunde telefonnummer:", tlfNummerKunde));
 
+        //Tilfoejer et par tomme linjer foer ordrens pizzaliste
         tempString.append("\n\n");
 
+        //Overskrift over ordrens pizzaer (skal nok tilpasses efter merge med Pizza class)
         tempString.append("Nr. Pizza              Ingredienser                                               Pris      Status       Kommentar\n");
 
+        //Gaar gennem ordrens pizzaliste og kalder toString for hver pizza og tilfoejer denne String sammen med linjeskift
         for (int i = 0; i < ordrePizzaListe.size(); i++) {
             tempString.append(ordrePizzaListe.get(i).toString()).append("\n");
-            //tempString.append("\n");
         }
-
+        //Linjeopdeler mellem ordre til overblik naar flere ordrer printes
         tempString.append("\n---------------------------------------------------------------------------------------------------------------------------------------------\n");
 
+        //Her omdannes StringBuilder objektet til en String
         return tempString.toString();
     }
 
+    //Ordrens totale pris beregnes og opdateres ved at hente prisen paa samtlige pizzaer i odrens pizzaliste
     public void opdaterTotalPrisOrdre() {
         prisTotalOrdre = 0;
         for (Pizza pizza : ordrePizzaListe) {
@@ -142,7 +162,8 @@ public class Ordre implements Serializable {
     }
 
 
-
+    //Printer ordrens pizzaliste tilfoejet et nr. ude til venstre fra 1 og opefter
+    //Det er for at kunne vaelge en bestemt pizza i ordren ved indtastning
     public void udskrivOrdrePizzaListeMedId() {
         for (int i = 0; i < ordrePizzaListe.size(); i++) {
             System.out.printf("[%2d] %s\n", i + 1, ordrePizzaListe.get(i).toString());
