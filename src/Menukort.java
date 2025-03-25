@@ -98,4 +98,32 @@ public class Menukort {
         }
 
     }
+
+    public static void opdaterMenu(ArrayList<Pizza> menu, String[] ingredienser) {
+
+        Pizza sofus = new Pizza(100, "Sofus", 100, ingredienser, "null");
+
+        menu.add(sofus);
+
+        try {
+
+            FileWriter myWriter = new FileWriter("Menu.txt");
+            for (int i = 0; i < menu.size(); i++) {
+                myWriter.write(menu.get(i).getNummer() + ", " + menu.get(i).getNavn() + ", " + menu.get(i).getPris() + ", ");
+                for (int j = 0; j < ingredienser.length-1; j++) {
+                    myWriter.write(menu.get(i).getIngredient()[j] + ", ");
+                }
+                myWriter.write(menu.get(i).getKommentar() + "\n");
+
+            }
+            myWriter.close();
+            System.out.println("Menuen er opdateret");
+        } catch (IOException e) {
+            System.out.println("En fejl er opstået.");
+            e.printStackTrace();
+            //23 min.
+        }
+
+    }
+
 }
