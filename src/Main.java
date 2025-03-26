@@ -77,9 +77,26 @@ public class Main {
             System.out.println("7. Søg efter ordre");
             System.out.println("8. Udlever/annuller ordre");
             System.out.println();
+            System.out.println();
+            System.out.println("10. Vis Mario liste og tlf numre paa ordre som er klar til udlevering");
+            System.out.println("11. Marker pizza på Marios liste som faerdig");
+            System.out.println();
+            System.out.println("12. Gem aktive ordre til egen backup fil");
+            System.out.println("13. Hent aktive ordre fra egen backup fil");
+            System.out.println();
+            System.out.println("14. Gem dagens afsluttede ordre til egen backup fil");
+            System.out.println("15. Hent dagens afsluttede ordre fra egen backup fil");
+            System.out.println();
+            System.out.println("16. Vis statistik for dagen");
+            System.out.println();
+            System.out.println("17. Se ordre i dagens afsluttede ordre liste");
+            System.out.println("18. Toem dagens afsluttede ordre liste for ordre uden at gemme dem");
+            System.out.println("16. Vis Ordre Historik fra filen");
+            System.out.println("20. Flyt klar ordre fra aktiv til afsluttede ordre");
+
             System.out.println("0. Exit");
 
-            switch (HelpMethods.getValgInt(0, 8, false, scanner)) {
+            switch (HelpMethods.getValgInt(0, 20, false, scanner)) {
                 case 0:
                     //0. Exit
                     //ret flag til at stoppe loop
@@ -181,17 +198,26 @@ public class Main {
 
 
                     break;
+
                 case 7:
-                    //7. Vis Mario liste og tlf numre paa ordre som er klar til udlevering
+                    Ordre.visAktiveOrdre(aktiveOrdre);
+                    break;
+
+                case 8:
+                    Ordre.udleverOrdre(aktiveOrdre, dagensAfsluttedeOrdre);
+                    break;
+
+                case 10:
+                    //10. Vis Mario liste og tlf numre paa ordre som er klar til udlevering
 
                     opdaterMarioListe(aktiveOrdre, marioPizzaListe, true);
                     break;
-                case 8:
-                    //8. Marker pizza på Marios liste som faerdig
+                case 11:
+                    //11. Marker pizza på Marios liste som faerdig
                     markerPizzaSomFaerdig(aktiveOrdre, marioPizzaListe, scanner);
                     break;
-                case 9:
-                    //9. Gem aktive ordre til egen fil
+                case 12:
+                    //12. Gem aktive ordre til egen fil
                     if (!aktiveOrdre.isEmpty()) {
 
 
@@ -204,8 +230,8 @@ public class Main {
                         System.err.println("Ingen ordre at gemme til fil");
                     }
                     break;
-                case 10:
-                    //10. Hent aktive ordre fra egen fil
+                case 13:
+                    //13. Hent aktive ordre fra egen fil
                     try {
                         //Hent alle ordre objekter fra saeerlige fil til aktive ordre liste ved hjaelp af method i instance af FileIO class
                         aktiveOrdre = myFileHandler.readAktiveOrdre();
@@ -223,8 +249,8 @@ public class Main {
 
                     break;
 
-                case 11:
-                    //11. Gem dagens afsluttede ordre til egen backup fil
+                case 14:
+                    //14. Gem dagens afsluttede ordre til egen backup fil
                     if (!aktiveOrdre.isEmpty()) {
 
 
@@ -238,8 +264,8 @@ public class Main {
                     }
 
                     break;
-                case 12:
-                    //12. Hent dagens afsluttede ordre fra egen backup fil
+                case 15:
+                    //15. Hent dagens afsluttede ordre fra egen backup fil
                     try {
                         //Hent alle ordre objekter fra saeerlige fil til dagens afsluttede ordre liste ved hjaelp af method i instance af FileIO class
                         dagensAfsluttedeOrdre = myFileHandler.readDagensAfsluttedeOrdre();
@@ -247,8 +273,8 @@ public class Main {
                         System.err.println("Der er ingen fil at laese");
                     }
                     break;
-                case 13:
-                    //13. Vis statistik for dagen
+                case 16:
+                    //16. Vis statistik for dagen
 
                     System.out.printf("Dagens omsaetning: %.2f kr.\n", dagensOmsaetning(dagensAfsluttedeOrdre));
 
@@ -259,8 +285,8 @@ public class Main {
 
 
                     break;
-                case 14:
-                    //14. Se ordre i dagens afsluttede ordre liste
+                case 17:
+                    //17. Se ordre i dagens afsluttede ordre liste
 
                     //Tjek om der er nogen ordre i dagens afsluttede ordre liste
                     if (!dagensAfsluttedeOrdre.isEmpty()) {
@@ -272,13 +298,13 @@ public class Main {
 
                     break;
 
-                case 15:
-                    //15. Toem dagens afsluttede ordre liste for ordre uden at gemme dem
+                case 18:
+                    //18. Toem dagens afsluttede ordre liste for ordre uden at gemme dem
                     dagensAfsluttedeOrdre.clear();
                     break;
 
-                case 16:
-                    //16. Vis Ordre Historik fra filen
+                case 19:
+                    //19. Vis Ordre Historik fra filen
 
                     try {
                         //Hent alle gamle ordre objekter fra fil til ordreHistorik liste ved hjaelp af method i instance af FileIO class
@@ -293,8 +319,8 @@ public class Main {
 
 
                     break;
-                case 17:
-                    //17. Flyt klar ordre fra aktiv til afsluttede ordre
+                case 20:
+                    //21. Flyt klar ordre fra aktiv til afsluttede ordre
 
                     if (!aktiveOrdre.isEmpty()) {
 
@@ -307,13 +333,7 @@ public class Main {
 
                     break;
 
-                case 7:
-                    Ordre.visAktiveOrdre(aktiveOrdre);
-                    break;
 
-                case 8:
-                    Ordre.udleverOrdre(aktiveOrdre, dagensAfsluttedeOrdre);
-                    break;
             }
 
         }
