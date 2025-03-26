@@ -72,8 +72,8 @@ public class Main {
             System.out.println("3. Toem aktive ordre liste for ordre");
             System.out.println();
             System.out.println("4. Test at aendre anden pizza i foerste ordre i ordre liste til klar");
-            System.out.println("5. Tilfoej ordre fra liste til fil");
-            System.out.println("6. Hent alle ordre fra fil til ordre liste");
+            System.out.println("5. Flyt afsluttede ordre til ordre historik");
+            System.out.println("6. Vis statistik paa ordre historik gamle ordre");
             System.out.println("7. Søg efter ordre");
             System.out.println("8. Udlever/annuller ordre");
             System.out.println();
@@ -91,7 +91,7 @@ public class Main {
             System.out.println();
             System.out.println("17. Se ordre i dagens afsluttede ordre liste");
             System.out.println("18. Toem dagens afsluttede ordre liste for ordre uden at gemme dem");
-            System.out.println("16. Vis Ordre Historik fra filen");
+            System.out.println("19. Vis Ordre Historik fra filen");
             System.out.println("20. Flyt klar ordre fra aktiv til afsluttede ordre");
 
             System.out.println("0. Exit");
@@ -141,23 +141,23 @@ public class Main {
                 case 5:
                     //5. Flyt afsluttede ordre til ordre historik
 
-                    //Temp code til at lave dummies med ved at aendre dato paa ordre foer de gemmes i historik
-                    //Saa der kan laves ordre tilbage i tid
-                    //Temp code start
-                    LocalDateTime nu = LocalDateTime.now();
-                    LocalDateTime nyMaaned = nu.withMonth(3);
-                    LocalDateTime nyMaanedOgDag = nyMaaned.withDayOfMonth(18);
-
-                    int tempHour = nyMaanedOgDag.getHour();
-                    int senereHourTilAfhentning = tempHour + 1;
-
-
-                    for (Ordre ordre : dagensAfsluttedeOrdre) {
-                        ordre.setTidspunktForOrdre(nyMaanedOgDag);
-                        ordre.setTidspunktForAfhentning(nyMaanedOgDag.withHour(senereHourTilAfhentning));
-
-                    }
-                    //Temp Code slut
+//                    //Temp code til at lave dummies med ved at aendre dato paa ordre foer de gemmes i historik
+//                    //Saa der kan laves ordre tilbage i tid
+//                    //Temp code start
+//                    LocalDateTime nu = LocalDateTime.now();
+//                    LocalDateTime nyMaaned = nu.withMonth(3);
+//                    LocalDateTime nyMaanedOgDag = nyMaaned.withDayOfMonth(18);
+//
+//                    int tempHour = nyMaanedOgDag.getHour();
+//                    int senereHourTilAfhentning = tempHour + 1;
+//
+//
+//                    for (Ordre ordre : dagensAfsluttedeOrdre) {
+//                        ordre.setTidspunktForOrdre(nyMaanedOgDag);
+//                        ordre.setTidspunktForAfhentning(nyMaanedOgDag.withHour(senereHourTilAfhentning));
+//
+//                    }
+//                    //Temp Code slut
 
                     if (!dagensAfsluttedeOrdre.isEmpty()) {
 
@@ -200,10 +200,12 @@ public class Main {
                     break;
 
                 case 7:
+                    //7. Søg efter ordre
                     Ordre.visAktiveOrdre(aktiveOrdre);
                     break;
 
                 case 8:
+                    //8. Udlever/annuller ordre
                     Ordre.udleverOrdre(aktiveOrdre, dagensAfsluttedeOrdre);
                     break;
 
@@ -217,7 +219,7 @@ public class Main {
                     markerPizzaSomFaerdig(aktiveOrdre, marioPizzaListe, scanner);
                     break;
                 case 12:
-                    //12. Gem aktive ordre til egen fil
+                    //12. Gem aktive ordre til egen backup fil
                     if (!aktiveOrdre.isEmpty()) {
 
 
@@ -231,7 +233,7 @@ public class Main {
                     }
                     break;
                 case 13:
-                    //13. Hent aktive ordre fra egen fil
+                    //13. Hent aktive ordre fra egen backup fil
                     try {
                         //Hent alle ordre objekter fra saeerlige fil til aktive ordre liste ved hjaelp af method i instance af FileIO class
                         aktiveOrdre = myFileHandler.readAktiveOrdre();
@@ -320,7 +322,7 @@ public class Main {
 
                     break;
                 case 20:
-                    //21. Flyt klar ordre fra aktiv til afsluttede ordre
+                    //20. Flyt klar ordre fra aktiv til afsluttede ordre
 
                     if (!aktiveOrdre.isEmpty()) {
 
