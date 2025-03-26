@@ -177,7 +177,7 @@ public class HelpMethods {
                     flagPizzaFindes = false;
                 } else {
                     //Tjek om plads i pizza menu er null. Rest fra da vi havde faste pladser i pizzamenu med null mellem
-                    if (pizzaMenuUdvalg.get(arrayPizzaValg[i][0]) != null) {
+                    if (pizzaMenuUdvalg.get(arrayPizzaValg[i][0]-1) != null) {
 
                     } else {
                         flagPizzaFindes = false;
