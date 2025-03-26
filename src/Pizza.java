@@ -135,7 +135,7 @@ public class Pizza implements Serializable {
 
         //If the comment is equal to null, it won't be added to the String Builder. If it isn't, it will be added underneath the information of the pizza object.
         if (!kommentar.equals("null")) {
-            string.append("\nKommentarer: " + kommentar);
+            string.append("\n       Kommentarer: " + kommentar);
         }
 
         //Furthermore, the comment won't be initialized until the order is put down.
