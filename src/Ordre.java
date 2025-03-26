@@ -4,6 +4,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 import java.util.*;
 
+
 // class til ordre
 // implements Serializable for at gøre det muligt at streame indhold til fil med ObjectOutputStream
 public class Ordre implements Serializable {
@@ -20,7 +21,7 @@ public class Ordre implements Serializable {
 
     //ORDRE CONSTRUCTOR
     //Nok ikke i brug. Parametre, men tidspunkt for ordre sat til tidspunkt for creation
-    public Ordre(LocalDateTime tidspunktForAfhentning, boolean erAfsluttet, String kommentar, double prisTotalOrdre, String tlfNummerKunde){
+    public Ordre(LocalDateTime tidspunktForAfhentning, boolean erAfsluttet, String kommentar, double prisTotalOrdre, String tlfNummerKunde) {
         this.tidspunktForOrdre = LocalDateTime.now();
         this.tidspunktForAfhentning = tidspunktForAfhentning;
         this.ordrePizzaListe = new ArrayList<>();
@@ -43,25 +44,31 @@ public class Ordre implements Serializable {
     }
 
     //GETTERS
-    public LocalDateTime getTidspunktForOrdre(){
+    public LocalDateTime getTidspunktForOrdre() {
         return this.tidspunktForOrdre;
     }
-    public LocalDateTime getTidspunktForAfhentning(){
+
+    public LocalDateTime getTidspunktForAfhentning() {
         return this.tidspunktForAfhentning;
     }
-    public DateTimeFormatter getFormatDK(){
+
+    public DateTimeFormatter getFormatDK() {
         return this.formatDK;
     }
-    public boolean getErAfsluttet(){
+
+    public boolean getErAfsluttet() {
         return this.erAfsluttet;
     }
-    public String getKommentar(){
+
+    public String getKommentar() {
         return this.kommentar;
     }
-    public double getPrisTotalOrdre(){
+
+    public double getPrisTotalOrdre() {
         return this.prisTotalOrdre;
     }
-    public String getTlfNummerKunde(){
+
+    public String getTlfNummerKunde() {
         return this.tlfNummerKunde;
     }
 
@@ -70,29 +77,33 @@ public class Ordre implements Serializable {
     }
 
     //SETTERS
-    public void setTidspunktForOrdre(LocalDateTime tidspunktForOrdre){
+    public void setTidspunktForOrdre(LocalDateTime tidspunktForOrdre) {
         this.tidspunktForOrdre = tidspunktForOrdre;
     }
-    public void setTidspunktForAfhentning(LocalDateTime tidspunktForAfhentning){
+
+    public void setTidspunktForAfhentning(LocalDateTime tidspunktForAfhentning) {
         this.tidspunktForAfhentning = tidspunktForAfhentning;
     }
-    public void setFormatDK(DateTimeFormatter formatDK){
+
+    public void setFormatDK(DateTimeFormatter formatDK) {
         this.formatDK = formatDK;
     }
-    public void setErAfsluttet(boolean erAfsluttet){
+
+    public void setErAfsluttet(boolean erAfsluttet) {
         this.erAfsluttet = erAfsluttet;
     }
-    public void setKommentar(String kommentar){
+
+    public void setKommentar(String kommentar) {
         this.kommentar = kommentar;
     }
-    public void setPrisTotalOrdre(double prisTotalOrdre){
+
+    public void setPrisTotalOrdre(double prisTotalOrdre) {
         this.prisTotalOrdre = prisTotalOrdre;
     }
 
-    public void setTlfNummerKunde(String tlfNummerKunde){
+    public void setTlfNummerKunde(String tlfNummerKunde) {
         this.tlfNummerKunde = tlfNummerKunde;
     }
-
 
 
     //Tilfoejer pizza i parameter til ordren og opdaterer ordrens pris
@@ -171,7 +182,83 @@ public class Ordre implements Serializable {
         }
     }
 
+    //Method til at tjekke om ordre har ufaerdige pizzaer
+    public boolean ordreHarUfaerdigePizza() {
+
+        boolean flagUfaerdigePizzaDenneOrdre = false;
+
+        for (int i = 0; i < ordrePizzaListe.size(); i++) {
+            if (ordrePizzaListe.get(i).getPizzaFaerdig() == false) {
+                flagUfaerdigePizzaDenneOrdre = true;
+            }
+        }
+
+        return flagUfaerdigePizzaDenneOrdre;
+    }
+
+    //Find aktive ordre og søg efter tlf nummer
+    //Find aktive ordre:
+    public static void visAktiveOrdre(ArrayList<Ordre> aktiveOrdre) {
+
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Indtast tlf nummer tilknyttet ordren:");
+
+        String soegTlfNummer = scanner.nextLine();
+
+        //ArrayList<Ordre> aktiveOrdre;
+
+        for (int i = 0; i < aktiveOrdre.size(); i++) {
+            if (aktiveOrdre.get(i).getTlfNummerKunde().matches(soegTlfNummer)) {
+                System.out.println("Resultat fundet: " + aktiveOrdre.get(i).getTlfNummerKunde());
+                System.out.println(aktiveOrdre.get(i));
+
+
+            } else {
+                System.out.println("Telefonnummeret findes ikke på listen");
+            }
+
+        }
+
+    }
+
+    //Udlever/annuller ordre
+
+    public static void udleverOrdre(ArrayList<Ordre> aktiveOrdre, ArrayList<Ordre> dagensAfsluttedeOrdre) {
+
+        Scanner scanner = new Scanner(System.in);
+        String soegTlfNummer = scanner.nextLine();
+
+        for (int i = 0; i < aktiveOrdre.size(); i++) {
+            System.out.println("Indtast tlf nummer tilknyttet ordren:");
+
+            if (aktiveOrdre.get(i).getTlfNummerKunde().matches(soegTlfNummer)) {
+                System.out.println("Resultat fundet: " + aktiveOrdre.get(i).getTlfNummerKunde());
+                System.out.println(aktiveOrdre.get(i));
+                System.out.println("Bekræft betaling (1) ja, (2) nej: ");
+                if (HelpMethods.getValgInt(1, 2, false, scanner)==1){
+                    aktiveOrdre.get(i).setErAfsluttet(true);
+                    dagensAfsluttedeOrdre.add(aktiveOrdre.remove(i));
+                    System.out.println("Betaling gennemført, udlever ordre");
+                } else {
+                    System.out.println("Betaling afbrudt");
+                    aktiveOrdre.remove(i);
+                }
+
+            } else {
+                System.out.println("Telefonnummeret findes ikke på listen");
+            }
+
+        }
+
+    }
+
+
 }
+
+
+
+
 
 
 
