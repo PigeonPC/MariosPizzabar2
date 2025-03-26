@@ -171,6 +171,20 @@ public class Ordre implements Serializable {
         }
     }
 
+    //Method til at tjekke om ordre har ufaerdige pizzaer
+    public boolean ordreHarUfaerdigePizza() {
+
+        boolean flagUfaerdigePizzaDenneOrdre = false;
+
+        for (int i = 0; i < ordrePizzaListe.size(); i++) {
+            if (ordrePizzaListe.get(i).getPizzaFaerdig() == false) {
+                flagUfaerdigePizzaDenneOrdre = true;
+            }
+        }
+
+        return flagUfaerdigePizzaDenneOrdre;
+    }
+
 }
 
 
