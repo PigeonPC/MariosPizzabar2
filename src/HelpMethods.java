@@ -1,4 +1,5 @@
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -11,8 +12,23 @@ import java.util.regex.Pattern;
 public class HelpMethods {
 
     //DateTimeFormatter i to forskellige formater som senere bruges til at konvertere LocalDateTime til passende String
-    static DateTimeFormatter formatDK = DateTimeFormatter.ofPattern("ddMMyy HH:mm");
-    static DateTimeFormatter formatDKKlokken = DateTimeFormatter.ofPattern("HH:mm");
+    static final DateTimeFormatter formatDK = DateTimeFormatter.ofPattern("ddMMyy HH:mm");
+    static final DateTimeFormatter formatDKKlokken = DateTimeFormatter.ofPattern("HH:mm");
+    static final DateTimeFormatter formatDKDato = DateTimeFormatter.ofPattern("dd MM  yyyy");
+
+    //String array til oversaet ugedage til dansk
+    static final String[][] weekDays = {
+            {"MONDAY", "Man"},
+            {"TUESDAY", "Tir"},
+            {"WEDNESDAY", "Ons"},
+            {"THURSDAY", "Tor"},
+            {"FRIDAY", "Fre"},
+            {"SATURDAY", "Lør"},
+            {"SUNDAY", "Søn"}
+             };
+
+
+
 
 
     //Helper method til at modtage text input fra bruger med max laengde
@@ -337,6 +353,23 @@ public class HelpMethods {
     //Helper method til at formatere LocalDateTime til fx 15:14
     public static String formatformatDKKlokken(LocalDateTime time) {
         return time.format(formatDKKlokken);
+    }
+
+    //Helper method til at formatere LocalDate til fx 03 11 2025
+    public static String formatDate(LocalDate dato) {
+        return dato.format(formatDKDato);
+    }
+
+    //Helper method til at oversaette navne paa ugedage fra engelsk til dansk
+    public static String translateUgedag(String weekday) {
+        for (int i = 0; i < weekDays.length; i++) {
+            if (weekday.equalsIgnoreCase(weekDays[i][0])) {
+                weekday = weekDays[i][1];
+                break;
+            }
+        }
+
+        return weekday;
     }
 
 

@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -67,7 +68,7 @@ public class Main {
         boolean exitApp = false;
 
         while (!exitApp) {
-            System.out.println("\n1. Opret ordre og tilfoej til ordre liste");
+            System.out.println("1. Opret ordre og tilfoej til ordre liste");
             System.out.println("2. Se ordre i aktive ordre liste");
             System.out.println("3. Toem aktive ordre liste for ordre");
             System.out.println();
@@ -145,16 +146,17 @@ public class Main {
 //                    //Saa der kan laves ordre tilbage i tid
 //                    //Temp code start
 //                    LocalDateTime nu = LocalDateTime.now();
-//                    LocalDateTime nyMaaned = nu.withMonth(3);
-//                    LocalDateTime nyMaanedOgDag = nyMaaned.withDayOfMonth(18);
+//                    LocalDateTime nyMaaned = nu.withMonth(9);
+//                    LocalDateTime nyMaanedOgDag = nyMaaned.withDayOfMonth(10);
+//                    LocalDateTime nyMaanedOgDagOgAar = nyMaanedOgDag.withYear(2024);
 //
-//                    int tempHour = nyMaanedOgDag.getHour();
+//                    int tempHour = nyMaanedOgDagOgAar.getHour();
 //                    int senereHourTilAfhentning = tempHour + 1;
 //
 //
 //                    for (Ordre ordre : dagensAfsluttedeOrdre) {
-//                        ordre.setTidspunktForOrdre(nyMaanedOgDag);
-//                        ordre.setTidspunktForAfhentning(nyMaanedOgDag.withHour(senereHourTilAfhentning));
+//                        ordre.setTidspunktForOrdre(nyMaanedOgDagOgAar);
+//                        ordre.setTidspunktForAfhentning(nyMaanedOgDagOgAar.withHour(senereHourTilAfhentning));
 //
 //                    }
 //                    //Temp Code slut
@@ -173,29 +175,43 @@ public class Main {
                     break;
 
                 case 6:
-                    //6. Vis statistik paa ordre historik gamle ordre
+                    //6. Vis statistik paa alle ordre i historik plus dagens afslutttede ordre
 
                     try {
                         //Hent alle gamle ordre objekter fra fil til ordreHistorik liste ved hjaelp af method i instance af FileIO class
-                        ordreHistorikListe = myFileHandler.read();
-
+                        if (myFileHandler != null) {
+                            ordreHistorikListe = myFileHandler.read();
+                        }
 
                     } catch (NullPointerException e) {
                         System.err.println("Der er ingen fil at laese");
                     }
 
-                    //Udvid dagensOmsaetning() til at vise omsaetning fordelt paa datoer
+                    //Tilfoej dagens afsluttede ordre til beregning af statistik paa historik
+                    if (!dagensAfsluttedeOrdre.isEmpty()) {
+                        ordreHistorikListe.addAll(dagensAfsluttedeOrdre);
+
+                    }
+
+                    //Vis omsaetning paa forskellige datoer i hele historik (plus dagens afsluttede ordre). Med ugedag.
                     historikOmsaetningDatoer(ordreHistorikListe);
 
-                    //Vis totale omsaetning for hele historik
-                    //System.out.printf("Historik total omsaetning: %.2f kr.\n", historikOmsaetning(ordreHistorikListe));
+                    //Vis totale omsaetning for hele historik (og dagens afsluttede ordre)
+                    System.out.printf("Total omsaetning:          %10.2f kr.\n(Historik inklusiv dagens afsluttede ordre)\n", historikOmsaetning(ordreHistorikListe));
+
+                    System.out.println("--------------------------------------------------------------------------");
 
                     //Overskrift
-                    System.out.println("\nAll time");
+                    System.out.println("\nAll time (historik inklusiv dagens afsluttede ordre)");
 
                     //Method til at lave histogram over frekvens af pizzaer og printe med hoejeste foerst
+                    //Alle solgte pizzaer i historik (plus dagens afsluttede ordre)
                     mestPopulaerePizzaer(ordreHistorikListe);
 
+                    System.out.println("--------------------------------------------------------------------------");
+
+                    //Toem listen da ikke brug for at have hele historik i memory
+                    ordreHistorikListe.clear();
 
                     break;
 
@@ -253,27 +269,36 @@ public class Main {
 
                 case 14:
                     //14. Gem dagens afsluttede ordre til egen backup fil
-                    if (!aktiveOrdre.isEmpty()) {
 
 
-                        for (Ordre ordre : aktiveOrdre) {
+                        if (!aktiveOrdre.isEmpty()) {
 
-                            myFileHandler.writeDagensAfsluttedeOrdre(aktiveOrdre);
+
+                            for (Ordre ordre : aktiveOrdre) {
+
+                                if (myFileHandler != null) {
+                                    myFileHandler.writeDagensAfsluttedeOrdre(aktiveOrdre);
+                                } else {
+                                    System.err.println("Filehandler error");
+                                }
+                            }
+
+
+                        } else {
+                            System.err.println("Ingen ordre at gemme til fil");
                         }
-
-                    } else {
-                        System.err.println("Ingen ordre at gemme til fil");
-                    }
 
                     break;
                 case 15:
                     //15. Hent dagens afsluttede ordre fra egen backup fil
-                    try {
+
                         //Hent alle ordre objekter fra saeerlige fil til dagens afsluttede ordre liste ved hjaelp af method i instance af FileIO class
-                        dagensAfsluttedeOrdre = myFileHandler.readDagensAfsluttedeOrdre();
-                    } catch (NullPointerException e) {
-                        System.err.println("Der er ingen fil at laese");
-                    }
+                        if (myFileHandler != null) {
+                            dagensAfsluttedeOrdre = myFileHandler.readDagensAfsluttedeOrdre();
+                        } else {
+                            System.err.println("Filehandler error");
+                        }
+
                     break;
                 case 16:
                     //16. Vis statistik for dagen
@@ -337,6 +362,7 @@ public class Main {
 
 
             }
+
 
         }
 
@@ -668,7 +694,7 @@ public class Main {
     public static void opdaterMarioListe(ArrayList<Ordre> aktiveOrdre, ArrayList<Pizza> marioPizzaListe, boolean visListe) {
 
         //Forbered StringBuilder til at tilfoeje tlf numre paa ordre som er faerdige
-        StringBuilder ordrerSomErFaerdige = new StringBuilder("Tlf nummer paa ordre som er klar til udlevering");
+        StringBuilder ordrerSomErFaerdige = new StringBuilder("\nTlf nummer paa ordre som er klar til udlevering: ");
 
         //Toem listen foer opdatering af den, hvis ikke allerede tom
         if (!marioPizzaListe.isEmpty()) {
@@ -735,7 +761,7 @@ public class Main {
         }
 
         if (visListe) {
-            System.out.printf("\n%s\n", ordrerSomErFaerdige.toString());
+            System.out.printf("\n%s\n\n", ordrerSomErFaerdige.toString());
         }
     }
 
@@ -747,16 +773,27 @@ public class Main {
         //Opdater Mario pizza liste
         opdaterMarioListe(aktiveOrdre, marioPizzaListe, false);
 
+        //Stop method hvis Marios liste er tom og der derfor ikke er noget at fjerne
+        if (marioPizzaListe.isEmpty()) {
+            System.out.println("Alle pizzaer er allerede klar\n");
+            return;
+        }
+
         //Udskriv pizzaer fra Marios pizza liste med id til at bruger kan vaelge en
         for (int i = 0; i < marioPizzaListe.size(); i++) {
             System.out.printf("[%2d] %s\n", i + 1, marioPizzaListe.get(i).toString());
 
         }
 
-        System.out.println("Enter [numnmer] på pizza som du vil slette fra ordre (0 for exit)");
+        System.out.println("Enter [numnmer] på pizza som du vil markere som klar (0 for exit)");
 
         //brug helper method til at modtage valg fra bruger ud fra id 0 til antal pizzaer i listen. 0 er til exit.
         tempValg = HelpMethods.getValgInt(0, marioPizzaListe.size(), false, scanner);
+
+        //Exit ved 0 indtastning
+        if (tempValg == 0) {
+            return;
+        }
 
         //Aendre status paa pizza som faerdig
         //Her bruges Marios liste som reference saa det ikke er noedvendigt at finde relevante ordre
@@ -845,9 +882,17 @@ public class Main {
         return historikOmsaetning;
     }
 
-    //Ufaerdig method der arbejdes paa
+    //Method der deler omsaetningen paa ordrer i liste op i datoer med ugedag
+    //Datoer sorteres med seneste foerst
     public static void historikOmsaetningDatoer(ArrayList<Ordre> ordreHistorikListe) {
 
+        //Variabel til at modtage en ordres afhentningstidspunkt med dato og klokkeslet
+        LocalDateTime ordreAfhentningDatoOgTidspunkt;
+
+        //Variabel til at modtage konvertering af afhentningstidspunkt som dato uden klokkeslet
+        //Hvis bruge LocalDateTime som Key ville alle ordre faa deres egen Key
+        //Maalet er at alle ordre paa samme dato faar samme Key
+        LocalDate ordreAfhentningDato;
 
         //Tjek om der overhovedet er ordre i listen
         if (ordreHistorikListe.isEmpty()) {
@@ -855,33 +900,52 @@ public class Main {
             return;
         }
 
+        //Create HashMap der har LocalDate som Key og double som value til sum af omsaetning paa datoens ordre
+        Map<LocalDate, Double> historikOmsaetningDatoMap = new HashMap<LocalDate, Double>();
 
-        Map<LocalDateTime, Double> historikOmsaetningDatoMap = new HashMap<LocalDateTime, Double>();
 
-
+        //Gaa samtlige ordrer igennem
         for (Ordre ordre : ordreHistorikListe) {
 
+            //Hent ordre afhentningstidspunkt med dato og klokkeslet
+            ordreAfhentningDatoOgTidspunkt = ordre.getTidspunktForAfhentning();
 
-            if (historikOmsaetningDatoMap.containsKey(ordre.getTidspunktForAfhentning())) {
-                historikOmsaetningDatoMap.put(ordre.getTidspunktForAfhentning(),
-                        (historikOmsaetningDatoMap.get(ordre.getTidspunktForAfhentning()) + ordre.getPrisTotalOrdre()));
+            //Traek ren dato ud og til sammenligning
+            ordreAfhentningDato = ordreAfhentningDatoOgTidspunkt.toLocalDate();
+
+            //Tjek om denne dato allerede er som key i map
+            if (historikOmsaetningDatoMap.containsKey(ordreAfhentningDato)) {
+                //Hent gamle value og genskriv key med gamle value + denne ordres pris
+                historikOmsaetningDatoMap.put(ordreAfhentningDato,
+                        (historikOmsaetningDatoMap.get(ordreAfhentningDato) + ordre.getPrisTotalOrdre()));
             } else {
-                historikOmsaetningDatoMap.put(ordre.getTidspunktForAfhentning(), ordre.getPrisTotalOrdre());
+                //Ellers opret denne dato som key med denne ordres pris som value
+                historikOmsaetningDatoMap.put(ordreAfhentningDato, ordre.getPrisTotalOrdre());
             }
-
-            ArrayList<Map.Entry<LocalDateTime, Double>> datoFrequency = new ArrayList<Map.Entry<LocalDateTime, Double>>(historikOmsaetningDatoMap.entrySet());
-
-
-            Collections.sort(datoFrequency, new ComparatorDatoFrequency());
-
-            for (int i = 0; i < datoFrequency.size(); i++) {
-                System.out.printf("%s %s", datoFrequency.get(i).getKey(), datoFrequency.get(i).getValue());
-            }
-
-
 
         }
 
+        //Create ArrayList med pairs fra HashMap som bestaar af dato og tilhoerende double som er datoens omsaetning
+        //Det goer det muligt at sortere pairs
+        ArrayList<Map.Entry<LocalDate, Double>> datoFrequency = new ArrayList<Map.Entry<LocalDate, Double>>(historikOmsaetningDatoMap.entrySet());
+
+        //Sorter ArrayList med Comparator som bruger .getKey() til at hente datoen fra pairs
+        //Datoer sorteres med seneste dato foerst
+        Collections.sort(datoFrequency, new ComparatorDatoOmsaetning());
+
+        //Overskrift
+        System.out.println("\nUgedag     Dato               Datoens totale omsaetning");
+
+        //Print ugedag, dato og total omsaetning for datoen
+        //.getDayOfWeek() bruges til at finde ugedag paa datoen i pair som hentes med .getKey()
+        //Denne ugedag oversaettes fra engelsk til dansk med helper method
+        //Datoen fra pair formateres med helper method
+        //Totalomsaetningen er fra Value i pair som hentes med .getValue()
+        for (int i = 0; i < datoFrequency.size(); i++) {
+            System.out.printf("%-10s %10s     %10.2f kr.\n", HelpMethods.translateUgedag(String.valueOf(datoFrequency.get(i).getKey().getDayOfWeek())), HelpMethods.formatDate(datoFrequency.get(i).getKey()), datoFrequency.get(i).getValue());
+        }
+
+        System.out.println();
 
     }
 }

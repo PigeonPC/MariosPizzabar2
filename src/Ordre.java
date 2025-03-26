@@ -151,7 +151,7 @@ public class Ordre implements Serializable {
         tempString.append("\n\n");
 
         //Overskrift over ordrens pizzaer (skal nok tilpasses efter merge med Pizza class)
-        tempString.append("Nr. Pizza              Ingredienser                                               Pris      Status       Kommentar\n");
+        tempString.append("Nr Pizza                        Ingredienser                                                                                   Pris   Status\n");
 
         //Gaar gennem ordrens pizzaliste og kalder toString for hver pizza og tilfoejer denne String sammen med linjeskift
         for (int i = 0; i < ordrePizzaListe.size(); i++) {
