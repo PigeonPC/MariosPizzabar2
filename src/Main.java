@@ -26,6 +26,7 @@ public class Main {
 
         //Dagens ordre som er afsluttede men endnu ikke er skrevet til fil med ordre historik
         ArrayList<Ordre> dagensAfsluttedeOrdre;
+        dagensAfsluttedeOrdre = new ArrayList<Ordre>();
 
         //Indeholder pizzaerne som er menuen
         ArrayList<Pizza> menuPizzaUdvalg;
@@ -58,10 +59,12 @@ public class Main {
             System.out.println("4. Test at aendre anden pizza i foerste ordre i ordre liste til klar");
             System.out.println("5. Tilfoej ordre fra liste til fil");
             System.out.println("6. Hent alle ordre fra fil til ordre liste");
+            System.out.println("7. Søg efter ordre");
+            System.out.println("8. Udlever/annuller ordre");
             System.out.println();
             System.out.println("0. Exit");
 
-            switch (HelpMethods.getValgInt(0, 6, false, scanner)) {
+            switch (HelpMethods.getValgInt(0, 8, false, scanner)) {
                 case 0:
                     //0. Exit
                     //ret flag til at stoppe loop
@@ -128,6 +131,13 @@ public class Main {
 
                     break;
 
+                case 7:
+                    Ordre.visAktiveOrdre(aktiveOrdre);
+                    break;
+
+                case 8:
+                    Ordre.udleverOrdre(aktiveOrdre, dagensAfsluttedeOrdre);
+                    break;
             }
 
         }
