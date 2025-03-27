@@ -9,7 +9,100 @@ public class Menukort {
 
     public static void main(String[] args) {
 
-        sletPizza(getMenu(), getIngredienser());
+        redigerMenu();
+
+    }
+
+    public static void redigerMenu() {
+
+        Scanner scanner = new Scanner(System.in);
+        boolean videre = false;
+        boolean hovedmenu = false;
+
+        while (true) {
+
+            System.out.println("1: Rediger menukort");
+            System.out.println("2: Rediger ingredienser");
+            System.out.println("3: Vend tilbage til hovedmenu");
+            System.out.println("Vælg en mulighed");
+
+            try {
+
+                int choice = scanner.nextInt();
+
+                    switch (choice) {
+                        case 1:
+
+                            while (true) {
+
+                                System.out.println("1: Tilføj pizza");
+                                System.out.println("2: Slet pizza");
+                                System.out.println("3: Vis menukort");
+                                System.out.println("4: Tilbage til rediger menu");
+                                System.out.println("Vælg en mulighed");
+
+                                try {
+
+                                    choice = scanner.nextInt();
+
+                                    switch (choice) {
+                                        case 1:
+                                            opretPizza(getIngredienser(), getMenu());
+                                            videre = true;
+                                            break;
+                                        case 2:
+                                            sletPizza(getMenu(), getIngredienser());
+                                            videre = true;
+                                            break;
+                                        case 3:
+                                            visSorteretMenu(getMenu());
+                                            break;
+                                        case 4:
+                                            videre = true;
+                                            break;
+                                        default:
+                                            System.err.println("Indtast venligst en gyldig mulighed");
+                                            break;
+
+                                    }
+
+                                } catch (Exception e) {
+                                    System.err.println("Indtast venligst en gyldig mulighed");
+                                    scanner.nextLine();
+                                }
+
+                                if (videre) {
+                                    break;
+                                }
+
+                            }
+                            break;
+                        case 2:
+                            scanner.nextLine();
+                            ingrediensBrugerMenu(scanner);
+                            break;
+
+                        case 3:
+                            hovedmenu = true;
+                            break;
+
+                        default:
+                            System.out.println("Indtast venligst en gyldig mulighed");
+                            break;
+                    }
+
+
+
+            } catch (Exception e) {
+                System.err.println("Indtast venligst et tal");
+                scanner.nextLine();
+            }
+
+            if (hovedmenu) {
+                break;
+            }
+
+        }
 
     }
 
@@ -151,19 +244,18 @@ public class Menukort {
 
             navn = scanner.nextLine().toUpperCase();
 
-                for (int i = 0; i < menu.size(); i++) {
+            for (int i = 0; i < menu.size(); i++) {
 
-                    if (menu.get(i).getNavn().equals(navn)) {
-                        System.out.println("Navnet er allerede i brug. Vælg venligst et andet.");
-                        ifNavn = false;
+                if (menu.get(i).getNavn().equals(navn)) {
+                    System.out.println("Navnet er allerede i brug. Vælg venligst et andet.");
+                    ifNavn = false;
 
-                        break;
-                    }
-                    else {
-                        ifNavn = true;
-                        }
-
+                    break;
+                } else {
+                    ifNavn = true;
                 }
+
+            }
 
             if (ifNavn) {
                 break;
@@ -333,7 +425,7 @@ public class Menukort {
 
         System.out.println("Vælg den pizza du ønsker at slette");
 
-        while(true) {
+        while (true) {
 
             try {
 
@@ -362,30 +454,30 @@ public class Menukort {
 
         }
 
-            try {
+        try {
 
-                FileWriter myWriter = new FileWriter("Menu.txt");
-                for (int i = 0; i < menu.size(); i++) {
+            FileWriter myWriter = new FileWriter("Menu.txt");
+            for (int i = 0; i < menu.size(); i++) {
 
-                    myWriter.write(menu.get(i).getNummer() + ", " + menu.get(i).getNavn() + ", " + menu.get(i).getPris() + ", ");
+                myWriter.write(menu.get(i).getNummer() + ", " + menu.get(i).getNavn() + ", " + menu.get(i).getPris() + ", ");
 
-                    for (int j = 0; j < menu.get(i).getIngredient().length; j++) {
+                for (int j = 0; j < menu.get(i).getIngredient().length; j++) {
 
-                        myWriter.write(menu.get(i).getIngredient()[j] + ", ");
-
-                    }
-                    myWriter.write(menu.get(i).getKommentar() + "\n");
+                    myWriter.write(menu.get(i).getIngredient()[j] + ", ");
 
                 }
-                myWriter.close();
-                System.out.println("Menuen er opdateret");
-            } catch (IOException e) {
-                System.out.println("En fejl er opstået.");
-                e.printStackTrace();
+                myWriter.write(menu.get(i).getKommentar() + "\n");
 
             }
+            myWriter.close();
+            System.out.println("Menuen er opdateret");
+        } catch (IOException e) {
+            System.out.println("En fejl er opstået.");
+            e.printStackTrace();
 
         }
+
+    }
 
     //Method to add the ingredients to the ingredients ArrayList from the Ingredienser.txt file.
     public static ArrayList<String> getIngredienser() {
