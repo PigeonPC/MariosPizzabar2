@@ -369,9 +369,9 @@ public class Menukort {
 
                     myWriter.write(menu.get(i).getNummer() + ", " + menu.get(i).getNavn() + ", " + menu.get(i).getPris() + ", ");
 
-                    for (int j = 0; j < ingredienser.size(); j++) {
+                    for (int j = 0; j < menu.get(i).getIngredient().length; j++) {
 
-                        myWriter.write(ingredienser.get(j) + ", ");
+                        myWriter.write(menu.get(i).getIngredient()[j] + ", ");
 
                     }
                     myWriter.write(menu.get(i).getKommentar() + "\n");
