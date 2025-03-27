@@ -9,7 +9,7 @@ public class Menukort {
 
     public static void main(String[] args) {
 
-        opretPizza(getIngredienser(), getMenu());
+        sletPizza(getMenu(), getIngredienser());
 
     }
 
@@ -321,9 +321,11 @@ public class Menukort {
         }
     }
 
-    public static void sletPizza(ArrayList<Pizza> menu) {
+    public static void sletPizza(ArrayList<Pizza> menu, ArrayList<String> ingredienser) {
 
         Scanner scanner = new Scanner(System.in);
+        boolean ifPizza = true;
+        int answer = 0;
 
         for (Pizza s : menu) {
             System.out.println(s);
@@ -331,19 +333,59 @@ public class Menukort {
 
         System.out.println("Vælg den pizza du ønsker at slette");
 
-        int answer = scanner.nextInt();
+        while(true) {
 
-        for (int i = 0; i < menu.size(); i++) {
+            try {
 
-            if (answer == menu.get(i).getNummer()) {
+                answer = scanner.nextInt();
 
-                System.out.println(menu.remove(i).getNavn() + " er blevet fjernet fra menukortet");
+                for (int i = 0; i < menu.size(); i++) {
 
+                    if (answer == menu.get(i).getNummer()) {
+                        System.out.println(menu.get(i).getNavn() + " er blevet slettet fra menukortet");
+                        menu.remove(i);
+                        ifPizza = false;
+                    }
+
+                }
+
+                if (!ifPizza) {
+                    break;
+                }
+
+                System.out.println("Der findes ikke en pizza med det indtastede nummer. Prøv igen.");
+
+            } catch (Exception e) {
+                System.out.println("Fejl. Det indtastede er ikke en mulighed");
+                scanner.nextLine();
             }
+
         }
 
-    }
+            try {
 
+                FileWriter myWriter = new FileWriter("Menu.txt");
+                for (int i = 0; i < menu.size(); i++) {
+
+                    myWriter.write(menu.get(i).getNummer() + ", " + menu.get(i).getNavn() + ", " + menu.get(i).getPris() + ", ");
+
+                    for (int j = 0; j < ingredienser.size(); j++) {
+
+                        myWriter.write(ingredienser.get(j) + ", ");
+
+                    }
+                    myWriter.write(menu.get(i).getKommentar() + "\n");
+
+                }
+                myWriter.close();
+                System.out.println("Menuen er opdateret");
+            } catch (IOException e) {
+                System.out.println("En fejl er opstået.");
+                e.printStackTrace();
+
+            }
+
+        }
 
     //Method to add the ingredients to the ingredients ArrayList from the Ingredienser.txt file.
     public static ArrayList<String> getIngredienser() {
