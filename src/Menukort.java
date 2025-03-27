@@ -452,7 +452,8 @@ public class Menukort {
             System.out.println("\n1. Tilføj ny ingrediens");
             System.out.println("2. Slet ingrediens fra listen");
             System.out.println("3. Vis ingrediensliste");
-            System.out.println("4. Tilbage til hovedmenu");
+            System.out.println("4. Tilbage til Rediger menu");
+            System.out.println("5. Tilbage til Hovedmenu");
 
             switch (HelpMethods.getValgInt(0, 8, false, scanner)) {
                 case 0:
@@ -471,14 +472,17 @@ public class Menukort {
                     sletIngrediens(ingredienser, scanner);
                     break;
 
-
                 case 3:
                     //3. vis ingredienslisten
                     visIngredienser(ingredienser);
                     break;
 
                 case 4:
-                    //4. naviger til hovedmenu
+                    //4. naviger til rediger menu
+
+
+                case 5:
+                    //5. naviger til hovedmenu
                     Main.run();
 
             }
