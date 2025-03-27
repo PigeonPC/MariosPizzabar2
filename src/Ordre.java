@@ -227,22 +227,34 @@ public class Ordre implements Serializable {
     public static void udleverOrdre(ArrayList<Ordre> aktiveOrdre, ArrayList<Ordre> dagensAfsluttedeOrdre) {
 
         Scanner scanner = new Scanner(System.in);
+        System.out.println("Indtast tlf nummer tilknyttet ordren:");
         String soegTlfNummer = scanner.nextLine();
 
+
         for (int i = 0; i < aktiveOrdre.size(); i++) {
-            System.out.println("Indtast tlf nummer tilknyttet ordren:");
 
             if (aktiveOrdre.get(i).getTlfNummerKunde().matches(soegTlfNummer)) {
+
                 System.out.println("Resultat fundet: " + aktiveOrdre.get(i).getTlfNummerKunde());
                 System.out.println(aktiveOrdre.get(i));
-                System.out.println("Bekræft betaling (1) ja, (2) nej: ");
-                if (HelpMethods.getValgInt(1, 2, false, scanner)==1){
+                System.out.println("Bekræft betaling (1) ja, (2) nej, (3) tilbage: ");
+
+                int valg = HelpMethods.getValgInt(1, 3, false, scanner);
+
+                if (valg ==1) {
                     aktiveOrdre.get(i).setErAfsluttet(true);
                     dagensAfsluttedeOrdre.add(aktiveOrdre.remove(i));
                     System.out.println("Betaling gennemført, udlever ordre");
-                } else {
+
+
+                } else if (valg ==2){
                     System.out.println("Betaling afbrudt");
                     aktiveOrdre.remove(i);
+
+
+                } else if(valg ==3) {
+                    break;
+
                 }
 
             } else {
