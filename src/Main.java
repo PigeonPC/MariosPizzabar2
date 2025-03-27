@@ -54,7 +54,7 @@ public class Main {
         try {
             myFileHandler = new FileIO();
         } catch (IOException e) {
-            System.err.println("FileIO historik objekt kunne ikke instantiates");
+            System.err.println("FileIO historik objekt kunne ikke instantieres");
             e.printStackTrace();
         }
 
@@ -68,19 +68,19 @@ public class Main {
         boolean exitApp = false;
 
         while (!exitApp) {
-            System.out.println("1. Opret ordre og tilfoej til ordre liste");
+            System.out.println("1. Opret ordre og tilføj til ordre liste");
             System.out.println("2. Se ordre i aktive ordre liste");
-            System.out.println("3. Toem aktive ordre liste for ordre");
+            System.out.println("3. Tøm aktiv ordre liste for ordre");
             System.out.println();
-            System.out.println("4. Test at aendre anden pizza i foerste ordre i ordre liste til klar");
+            System.out.println("4. Test at ændre anden pizza i første ordre i ordre liste til klar");
             System.out.println("5. Flyt afsluttede ordre til ordre historik");
-            System.out.println("6. Vis statistik paa ordre historik gamle ordre");
+            System.out.println("6. Vis statistik på ordre historik gamle ordre");
             System.out.println("7. Søg efter ordre");
             System.out.println("8. Udlever/annuller ordre");
             System.out.println();
             System.out.println();
-            System.out.println("10. Vis Mario liste og tlf numre paa ordre som er klar til udlevering");
-            System.out.println("11. Marker pizza på Marios liste som faerdig");
+            System.out.println("10. Vis Mario liste og tlf numre på ordre som er klar til udlevering");
+            System.out.println("11. Marker pizza på Marios liste som færdig");
             System.out.println();
             System.out.println("12. Gem aktive ordre til egen backup fil");
             System.out.println("13. Hent aktive ordre fra egen backup fil");
@@ -91,8 +91,8 @@ public class Main {
             System.out.println("16. Vis statistik for dagen");
             System.out.println();
             System.out.println("17. Se ordre i dagens afsluttede ordre liste");
-            System.out.println("18. Toem dagens afsluttede ordre liste for ordre uden at gemme dem");
-            System.out.println("19. Vis Ordre Historik fra filen");
+            System.out.println("18. Tøm dagens afsluttede ordre liste for ordre uden at gemme dem");
+            System.out.println("19. Vis ordre historik fra filen");
             System.out.println("20. Flyt klar ordre fra aktiv til afsluttede ordre");
 
             System.out.println("0. Exit");
@@ -184,7 +184,7 @@ public class Main {
                         }
 
                     } catch (NullPointerException e) {
-                        System.err.println("Der er ingen fil at laese");
+                        System.err.println("Der er ingen fil at læse");
                     }
 
                     //Tilfoej dagens afsluttede ordre til beregning af statistik paa historik
@@ -197,7 +197,7 @@ public class Main {
                     historikOmsaetningDatoer(ordreHistorikListe);
 
                     //Vis totale omsaetning for hele historik (og dagens afsluttede ordre)
-                    System.out.printf("Total omsaetning:          %10.2f kr.\n(Historik inklusiv dagens afsluttede ordre)\n", historikOmsaetning(ordreHistorikListe));
+                    System.out.printf("Total omsætning:          %10.2f kr.\n(Historik inklusiv dagens afsluttede ordre)\n", historikOmsaetning(ordreHistorikListe));
 
                     System.out.println("--------------------------------------------------------------------------");
 
@@ -254,7 +254,7 @@ public class Main {
                         //Hent alle ordre objekter fra saeerlige fil til aktive ordre liste ved hjaelp af method i instance af FileIO class
                         aktiveOrdre = myFileHandler.readAktiveOrdre();
                     } catch (NullPointerException e) {
-                        System.err.println("Der er ingen fil at laese");
+                        System.err.println("Der er ingen fil at læse");
                     }
 
 //                    //temp loop til at goere inlaese aktive ordre til afsluttede for at lave dummies
@@ -303,7 +303,7 @@ public class Main {
                 case 16:
                     //16. Vis statistik for dagen
 
-                    System.out.printf("Dagens omsaetning: %.2f kr.\n", dagensOmsaetning(dagensAfsluttedeOrdre));
+                    System.out.printf("Dagens omsætning: %.2f kr.\n", dagensOmsaetning(dagensAfsluttedeOrdre));
 
                     if (!dagensAfsluttedeOrdre.isEmpty()) {
                         System.out.println("\nDagens");
@@ -339,7 +339,7 @@ public class Main {
 
 
                     } catch (NullPointerException e) {
-                        System.err.println("Der er ingen fil at laese");
+                        System.err.println("Der er ingen fil at læse");
                     }
 
                     System.out.println(ordreHistorikListe);
@@ -495,7 +495,7 @@ public class Main {
                         //Kald metode til at udskrive ordrens pizza liste med et id tal ude til venstre saa der er noget for bruger at vaelge ud fra
                         tempOrdre.udskrivOrdrePizzaListeMedId();
 
-                        System.out.println("Enter [numnmer] på pizza som du vil slette fra ordre (0 for exit)");
+                        System.out.println("Enter [nummer] på pizza som du vil slette fra ordre (0 for exit)");
 
                         //brug helper method til at modtage valg fra bruger ud fra id 0 til antal pizzaer i listen. 0 er til exit.
                         tempValg = HelpMethods.getValgInt(0, tempOrdre.ordrePizzaListe.size(), false, scanner);
@@ -513,7 +513,7 @@ public class Main {
 
                 case 3:
                     //3. Fjern samtlige pizza fra ordre
-                    System.out.println("Er du sikker på at du vil fjerne alle pizza fra denne ordre?  (1)NEJ (2)JA");
+                    System.out.println("Er du sikker på at du vil fjerne alle pizzaerne fra denne ordre?  (1)NEJ (2)JA");
 
                     //Brug helper method til at modtage 1 eller 2 uden at ren Enter er tilladt
                     //Toem ordrens pizza liste hvis bekraefte. Det er basically clear paa listen
@@ -537,7 +537,7 @@ public class Main {
                         //Kald metode til at udskrive ordrens pizza liste med et id tal ude til venstre saa der er noget for bruger at vaelge ud fra
                         tempOrdre.udskrivOrdrePizzaListeMedId();
 
-                        System.out.println("Enter [numnmer] på pizza som du vil ændre kommentar på (0 for exit)");
+                        System.out.println("Enter [nummer] på pizza som du vil ændre kommentar på (0 for exit)");
 
                         //Modtag valg fra bruger via helper method uden at ren Enter er tilladt.
                         tempValg = HelpMethods.getValgInt(0, tempOrdre.ordrePizzaListe.size(), false, scanner);
@@ -694,7 +694,7 @@ public class Main {
     public static void opdaterMarioListe(ArrayList<Ordre> aktiveOrdre, ArrayList<Pizza> marioPizzaListe, boolean visListe) {
 
         //Forbered StringBuilder til at tilfoeje tlf numre paa ordre som er faerdige
-        StringBuilder ordrerSomErFaerdige = new StringBuilder("\nTlf nummer paa ordre som er klar til udlevering: ");
+        StringBuilder ordrerSomErFaerdige = new StringBuilder("\nTlf nummer på ordre som er klar til udlevering: ");
 
         //Toem listen foer opdatering af den, hvis ikke allerede tom
         if (!marioPizzaListe.isEmpty()) {
@@ -785,7 +785,7 @@ public class Main {
 
         }
 
-        System.out.println("Enter [numnmer] på pizza som du vil markere som klar (0 for exit)");
+        System.out.println("Enter [nummer] på pizza som du vil markere som klar (0 for exit)");
 
         //brug helper method til at modtage valg fra bruger ud fra id 0 til antal pizzaer i listen. 0 er til exit.
         tempValg = HelpMethods.getValgInt(0, marioPizzaListe.size(), false, scanner);
@@ -821,7 +821,7 @@ public class Main {
 
         //Tjek om der overhovedet er ordre i listen
         if (listeMedOrdrer.isEmpty()) {
-            System.err.println("Ingen pizza obejkter i denne liste");
+            System.err.println("Ingen pizza objekter i denne liste");
             return;
         }
 
@@ -896,7 +896,7 @@ public class Main {
 
         //Tjek om der overhovedet er ordre i listen
         if (ordreHistorikListe.isEmpty()) {
-            System.err.println("Ingen pizza obejkter i denne liste");
+            System.err.println("Ingen pizza objekter i denne liste");
             return;
         }
 
@@ -934,7 +934,7 @@ public class Main {
         Collections.sort(datoFrequency, new ComparatorDatoOmsaetning());
 
         //Overskrift
-        System.out.println("\nUgedag     Dato               Datoens totale omsaetning");
+        System.out.println("\nUgedag     Dato               Datoens totale omsætning");
 
         //Print ugedag, dato og total omsaetning for datoen
         //.getDayOfWeek() bruges til at finde ugedag paa datoen i pair som hentes med .getKey()

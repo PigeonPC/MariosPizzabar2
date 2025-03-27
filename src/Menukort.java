@@ -7,6 +7,12 @@ import static java.lang.Integer.parseInt;
 
 public class Menukort {
 
+    public static void main(String[] args) {
+
+        opretPizza(getIngredienser(), getMenu());
+
+    }
+
     //Method to add the pizzas to the menu ArrayList from the Menu.txt file.
     public static ArrayList getMenu() {
 
@@ -143,7 +149,7 @@ public class Menukort {
 
         while (true) {
 
-            navn = scanner.nextLine();
+            navn = scanner.nextLine().toUpperCase();
 
                 for (int i = 0; i < menu.size(); i++) {
 
@@ -300,11 +306,11 @@ public class Menukort {
 
             FileWriter myWriter = new FileWriter("Menu.txt", true);
 
-            myWriter.write(newPizza.getNummer() + ", " + newPizza.getNavn() + ", " + newPizza.getPris() + ", ");
+            myWriter.write("\n" + newPizza.getNummer() + ", " + newPizza.getNavn() + ", " + newPizza.getPris() + ", ");
             for (int j = 0; j < array.length; j++) {
                 myWriter.write(array[j] + ", ");
             }
-            myWriter.write(newPizza.getKommentar() + "\n");
+            myWriter.write(newPizza.getKommentar());
 
             myWriter.close();
             System.out.println("Menuen er opdateret");

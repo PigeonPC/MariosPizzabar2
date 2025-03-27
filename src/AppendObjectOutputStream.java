@@ -8,7 +8,7 @@ import java.io.OutputStream;
 //nedarvning af ObjectOutputStream med det formaal at override writeStreamHeader()
 //ObjectOutputStream class er kun lavet til overwrite
 //Den tilfoejer en header til de streamede data
-//Hvis man tvinger den til at udvide en fil med flere gange write saa kommer der flere headers og filen bliver ulaeselig
+//Hvis man tvinger den ti   aqs l at udvide en fil med flere gange write saa kommer der flere headers og filen bliver ulaeselig
 //override af method forhindrer dette
 public class AppendObjectOutputStream extends ObjectOutputStream
 {
