@@ -1,6 +1,8 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Scanner;
+
 import static java.lang.Integer.parseInt;
 
 public class Menukort {
@@ -52,42 +54,289 @@ public class Menukort {
 
     //All the pizzas are now printed to the console, so Alfonso can view them while creating a new order.
 
-    public static void visMenu(ArrayList<Pizza> menu) {
+    public static void visSorteretMenu(ArrayList<Pizza> menu) {
 
-        for (Pizza s : menu) {
-            System.out.println(s);
-        }
+        sorterMenu("nummer", getMenu());
 
     }
 
-    public static void opdaterMenu(ArrayList<Pizza> menu, String[] ingredienser) {
+    public static void sorterMenu(String sortBy, ArrayList<Pizza> menu) {
+        if (sortBy.equals("nummer")) {
+            menu.sort(Comparator.comparingInt(Pizza::getNummer));
 
-        Pizza sofus = new Pizza(100, "Sofus", 100, ingredienser, "null");
+            for (Pizza s : menu) {
+                System.out.println(s);
+            }
 
-        menu.add(sofus);
+        }
+    }
+
+    public static void opretPizza(ArrayList<String> ingredienser, ArrayList<Pizza> menu) {
+
+        Scanner scanner = new Scanner(System.in);
+
+        int nummer = 0;
+        int pris = 0;
+        int answer = 0;
+        int input = 0;
+        String navn = "";
+        boolean ifNavn = true;
+        boolean ifExists = true;
+        boolean ifNegative = true;
+        boolean ifNextLine = true;
+        boolean ifBreak = true;
+        ArrayList<String> ingredients = new ArrayList<>();
+
+        System.out.println("Hvad er nummeret på den pizza du ønsker at tilføje?");
+
+        while (true) {
+
+            if (scanner.hasNextInt()) {
+
+                nummer = scanner.nextInt();
+
+                for (int i = 0; i < menu.size(); i++) {
+
+                    if (nummer == (menu.get(i).getNummer())) {
+                        System.out.println("Nummeret er allerede i brug. Vælg venligst et andet");
+                        ifExists = false;
+                        ifNextLine = false;
+
+                        break;
+
+                    } else if (nummer < 1) {
+                        System.out.println("Tallet er negativt. Vælg venligst et andet");
+                        ifNegative = false;
+                        ifNextLine = false;
+
+                        break;
+
+                    } else {
+                        ifExists = true;
+                        ifNegative = true;
+
+                    }
+
+                }
+
+                if (ifExists && ifNegative) {
+                    break;
+                }
+
+            } else {
+
+                if (!ifNextLine) {
+                    scanner.nextLine();
+
+                }
+
+                String error = scanner.nextLine();
+                System.out.println("\"" + error + "\"" + " er ikke et tal");
+                ifNextLine = true;
+
+            }
+        }
+
+        scanner.nextLine();
+
+        System.out.println("Hvad er navnet på den pizza du ønsker at tilføje?");
+
+        while (true) {
+
+            navn = scanner.nextLine();
+
+                for (int i = 0; i < menu.size(); i++) {
+
+                    if (menu.get(i).getNavn().equals(navn)) {
+                        System.out.println("Navnet er allerede i brug. Vælg venligst et andet.");
+                        ifNavn = false;
+
+                        break;
+                    }
+                    else {
+                        ifNavn = true;
+                        }
+
+                }
+
+            if (ifNavn) {
+                break;
+            }
+
+        }
+
+
+        System.out.println("Hvad er prisen på den pizza du ønsker at tilføje?");
+
+        while (true) {
+
+            if (scanner.hasNextInt()) {
+
+                pris = scanner.nextInt();
+
+                for (int i = 0; i < menu.size(); i++) {
+
+                    if (pris < 1) {
+                        System.out.println("Tallet er negativt. Vælg venligst et andet");
+                        ifNegative = false;
+                        ifNextLine = false;
+                        break;
+
+                    } else {
+                        ifNegative = true;
+
+                    }
+
+                }
+
+                if (ifNegative) {
+                    break;
+                }
+
+            } else {
+
+                if (!ifNextLine) {
+                    scanner.nextLine();
+
+                }
+
+                String error = scanner.nextLine();
+                System.out.println("\"" + error + "\"" + " er ikke et tal");
+                ifNextLine = true;
+
+            }
+        }
+
+        while (true) {
+
+            while (true) {
+
+                try {
+
+                    for (int i = 0; i < ingredienser.size(); i++) {
+
+                        if (!ingredients.contains(ingredienser.get(i))) {
+                            System.out.println((i + 1) + ": " + ingredienser.get(i));
+                        }
+                        if (ingredients.contains(ingredienser.get(i))) {
+                            System.out.println((i + 1) + ": " + ingredienser.get(i) + " (Allerede tilføjet. Vælg igen for at fjerne)");
+                        }
+
+                    }
+
+                    System.out.println("Hvilken ingrediens ønsker du at tilføje til pizzaen?");
+
+                    input = scanner.nextInt();
+
+                    if (input <= ingredienser.size() && input > 0) {
+                        break;
+                    } else {
+                        System.out.println("Fejl. Det indtastede er ikke en mulighed");
+                    }
+
+                } catch (Exception e) {
+                    System.out.println("Fejl. Det indtastede er ikke en mulighed");
+                    scanner.nextLine();
+
+                }
+
+            }
+
+            if (ingredients.contains(ingredienser.get(input - 1))) {
+                ingredients.remove(ingredienser.get(input - 1));
+                System.out.println(ingredienser.get(input - 1) + " fjernet fra pizza");
+            } else if (!ingredients.contains(ingredienser.get(input - 1))) {
+                ingredients.add(ingredienser.get(input - 1));
+                System.out.println(ingredienser.get(input - 1) + " tilføjet til pizza");
+            }
+
+            while (true) {
+
+                try {
+
+                    System.out.println("Vil du tilføje flere ingredienser?");
+                    System.out.println("1: Ja");
+                    System.out.println("2: Nej");
+
+                    answer = scanner.nextInt();
+
+                    if (answer == 1) {
+
+                        break;
+
+                    } else if (answer == 2) {
+
+                        ifBreak = false;
+                        break;
+
+                    } else {
+                        System.out.println("Fejl. Det indtastede er ikke en mulighed");
+                    }
+
+                } catch (Exception e) {
+                    System.out.println("Fejl. Det indtastede er ikke en mulighed");
+                    scanner.nextLine();
+                }
+
+            }
+            if (!ifBreak) {
+
+                break;
+
+            }
+
+        }
+
+        String[] array = new String[ingredients.size()];
+
+        for (int i = 0; i < ingredients.size(); i++) {
+            array[i] = ingredients.get(i);
+        }
+
+        Pizza newPizza = new Pizza(nummer, navn, pris, array, "null");
+        menu.add(newPizza);
 
         try {
 
-            FileWriter myWriter = new FileWriter("Menu.txt");
-            for (int i = 0; i < menu.size(); i++) {
-                myWriter.write(menu.get(i).getNummer() + ", " + menu.get(i).getNavn() + ", " + menu.get(i).getPris() + ", ");
-                for (int j = 0; j < ingredienser.length-1; j++) {
-                    myWriter.write(menu.get(i).getIngredient()[j] + ", ");
-                }
-                myWriter.write(menu.get(i).getKommentar() + "\n");
+            FileWriter myWriter = new FileWriter("Menu.txt", true);
 
+            myWriter.write(newPizza.getNummer() + ", " + newPizza.getNavn() + ", " + newPizza.getPris() + ", ");
+            for (int j = 0; j < array.length; j++) {
+                myWriter.write(array[j] + ", ");
             }
+            myWriter.write(newPizza.getKommentar() + "\n");
+
             myWriter.close();
             System.out.println("Menuen er opdateret");
         } catch (IOException e) {
             System.out.println("En fejl er opstået.");
             e.printStackTrace();
-            //23 min.
+
+        }
+    }
+
+    public static void sletPizza(ArrayList<Pizza> menu) {
+
+        Scanner scanner = new Scanner(System.in);
+
+        for (Pizza s : menu) {
+            System.out.println(s);
+        }
+
+        System.out.println("Vælg den pizza du ønsker at slette");
+
+        int answer = scanner.nextInt();
+
+        for (int i = 0; i < menu.size(); i++) {
+
+            if (answer == menu.get(i).getNummer()) {
+
+                System.out.println(menu.remove(i).getNavn() + " er blevet fjernet fra menukortet");
+
+            }
         }
 
     }
-
-
 
 
     //Method to add the ingredients to the ingredients ArrayList from the Ingredienser.txt file.
@@ -139,14 +388,13 @@ public class Menukort {
 
             myWriter.close();
             //System.out.println("\nIngredienslisten er opdateret");
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             System.out.println("En fejl er opstået.");
             e.printStackTrace();
         }
     }
 
-    public static void ingrediensBrugerMenu(Scanner scanner){
+    public static void ingrediensBrugerMenu(Scanner scanner) {
         ArrayList<String> ingredienser = getIngredienser();
         visIngredienser(ingredienser);
 
@@ -195,7 +443,7 @@ public class Menukort {
         System.out.println("\nIndtast ny ingrediens: ");
         String ingrediens = scanner.nextLine();
 
-        if (ingrediens.isEmpty()){
+        if (ingrediens.isEmpty()) {
             System.out.println("Du indtastede ikke noget, ingrediens ikke tilføjet");
             return;
         }
@@ -214,9 +462,9 @@ public class Menukort {
 
     }
 
-    public static void sletIngrediens(ArrayList<String> ingredienser, Scanner scanner){
+    public static void sletIngrediens(ArrayList<String> ingredienser, Scanner scanner) {
         System.out.println("\nHvilken ingrediens vil du slette?");
-        for (int i = 0; i < ingredienser.size(); i++){
+        for (int i = 0; i < ingredienser.size(); i++) {
             System.out.println((i + 1) + ". " + ingredienser.get(i));
         }
 
@@ -238,8 +486,7 @@ public class Menukort {
             String fjernet = ingredienser.remove(valg - 1);
             opdaterIngredienser(ingredienser); //Gem den nye liste i filen
             System.out.println("\nIngrediensen '" + fjernet + "' er blevet fjernet");
-        }
-        catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             System.out.println("\nDu skal skrive et tal");
         }
     }
