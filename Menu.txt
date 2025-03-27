@@ -1,4 +1,4 @@
-MARGHERITA, 80, Tomatsauce, mozzarella, null
+1, MARGHERITA, 80, Tomatsauce, mozzarella, null
 2, STROMBOLI, 90, Tomatsauce, mozzarella, italiensk kogt skinke, null
 3, LA PAZZA, 100, Tomatsauce, mozzarella, italiensk kogt skinke, ananas, null
 4, QUATTRO STAGIONI, 110, Tomatsauce, mozzarella, italiensk kogt skinke, artiskok, champignon, kæmperejer, null
