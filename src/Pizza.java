@@ -131,7 +131,7 @@ public class Pizza implements Serializable {
         string.append(pris + " kr.");
 
         //Adding Klar eller ingenting alt efter om pizza er bagt faerdig
-        string.append((pizzaFaerdig) ? "Klar" : "");
+        string.append((pizzaFaerdig) ? "  Klar" : "");
 
         //If the comment is equal to null, it won't be added to the String Builder. If it isn't, it will be added underneath the information of the pizza object.
         if (!kommentar.equals("null")) {
