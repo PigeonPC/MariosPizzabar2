@@ -72,8 +72,230 @@ public class Main {
         } else {
             System.err.println("Filehandler error");
         }
+        //HER STARTER MIDLERTIDIG MENU
+        // menu dummy til test oprette og write/read ordre objekter
+        boolean exitApp = false;
+
+        while (!exitApp) {
+            System.out.println("1. Opret ordre og tilføj til ordre liste");
+            System.out.println("2. Se ordre i aktive ordre liste");
+            System.out.println("3. Tøm aktiv ordre liste for ordre");
+            System.out.println();
+            System.out.println("4. Test at ændre anden pizza i første ordre i ordre liste til klar");
+            System.out.println("5. Flyt afsluttede ordre til ordre historik");
+            System.out.println("6. Vis statistik på ordre historik gamle ordre");
+            System.out.println("7. Søg efter ordre");
+            System.out.println("8. Udlever/annuller ordre");
+            System.out.println();
+            System.out.println();
+            System.out.println("10. Vis Mario liste og tlf numre på ordre som er klar til udlevering");
+            System.out.println("11. Marker pizza på Marios liste som færdig");
+            System.out.println();
+            System.out.println("12. Gem aktive ordre til egen backup fil");
+            System.out.println("13. Hent aktive ordre fra egen backup fil");
+            System.out.println();
+            System.out.println("14. Gem dagens afsluttede ordre til egen backup fil");
+            System.out.println("15. Hent dagens afsluttede ordre fra egen backup fil");
+            System.out.println();
+            System.out.println("16. Vis statistik for dagen");
+            System.out.println();
+            System.out.println("17. Se ordre i dagens afsluttede ordre liste");
+            System.out.println("18. Tøm dagens afsluttede ordre liste for ordre uden at gemme dem");
+            System.out.println("19. Vis ordre historik fra filen");
+            System.out.println("20. Flyt klar ordre fra aktiv til afsluttede ordre");
+
+            System.out.println("0. Exit");
+
+            switch (HelpMethods.getValgInt(0, 20, false, scanner)) {
+                case 0:
+                    //0. Exit
+                    //ret flag til at stoppe loop
+                    exitApp = true;
+                    break;
+                case 1:
+                    //1. Opret ordre og tilfoej til ordre liste
+                    //Tilfoej en ny ordre til listen af ordre ved at kalde method for opret ordre med pizza menu som parameter
+                    aktiveOrdre.add(menuOpretOrdre(menuPizzaUdvalg, scanner));
+                    break;
+                case 2:
+                    //2. Se ordre i aktive ordre liste
+
+                    //Tjek om der er nogen ordre i aktive 2ordre liste
+                    if (!aktiveOrdre.isEmpty()) {
+                        //svarer til System.out.println paa samtlige ordre i aktive ordre liste
+                        aktiveOrdre.forEach(System.out::println);
+                    } else {
+                        System.err.println("Der er ingen ordre at printe");
+                    }
 
 
+                    break;
+                case 3:
+                    //3. Toem aktive ordre liste for ordre
+                    //
+                    aktiveOrdre.clear();
+                    break;
+                case 4:
+                    //4. Test at aendre anden pizza i foerste ordre i ordre liste til klar
+                    //Har bare vaeret brugt til test
+                    //Tjek at der er min 1 ordre i ordre liste og at denne har min 2 pizzaer
+                    //for at undgaa fejl ved at tilgaa objekt som ikke findes
+                    if (!aktiveOrdre.isEmpty() && aktiveOrdre.get(0).getOrdrePizzaListe().size() >= 2) {
+                        //tag foerste ordre i ordre liste tag dennes liste af pizzaer og tag anden pizza og brug dens setter til pizzaFaerdig attribut
+                        aktiveOrdre.get(0).getOrdrePizzaListe().get(1).setPizzaFaerdig(true);
+                    } else {
+                        System.err.println("Den pizza og/eller ordre findes ikke");
+                    }
+                    break;
+
+                case 5:
+                    //5. Flyt afsluttede ordre til ordre historik
+
+//                    //Temp code til at lave dummies med ved at aendre dato paa ordre foer de gemmes i historik
+//                    //Saa der kan laves ordre tilbage i tid
+//                    //Temp code start
+//                    LocalDateTime nu = LocalDateTime.now();
+//                    LocalDateTime nyMaaned = nu.withMonth(9);
+//                    LocalDateTime nyMaanedOgDag = nyMaaned.withDayOfMonth(10);
+//                    LocalDateTime nyMaanedOgDagOgAar = nyMaanedOgDag.withYear(2024);
+//
+//                    int tempHour = nyMaanedOgDagOgAar.getHour();
+//                    int senereHourTilAfhentning = tempHour + 1;
+//
+//
+//                    for (Ordre ordre : dagensAfsluttedeOrdre) {
+//                        ordre.setTidspunktForOrdre(nyMaanedOgDagOgAar);
+//                        ordre.setTidspunktForAfhentning(nyMaanedOgDagOgAar.withHour(senereHourTilAfhentning));
+//
+//                    }
+//                    //Temp Code slut
+
+                    if (!dagensAfsluttedeOrdre.isEmpty()) {
+
+                        for (Ordre ordre : dagensAfsluttedeOrdre) {
+                            myFileHandler.write(ordre);
+                        }
+
+                        dagensAfsluttedeOrdre.clear();
+
+                    } else {
+                        System.err.println("Ingen ordre at gemme til fil");
+                    }
+                    break;
+
+                case 6:
+                    //6. Vis statistik paa alle ordre i historik plus dagens afslutttede ordre
+
+                    try {
+                        //Hent alle gamle ordre objekter fra fil til ordreHistorik liste ved hjaelp af method i instance af FileIO class
+                        if (myFileHandler != null) {
+                            ordreHistorikListe = myFileHandler.read();
+                        }
+
+                    } catch (NullPointerException e) {
+                        System.err.println("Der er ingen fil at læse");
+                    }
+
+                    //Tilfoej dagens afsluttede ordre til beregning af statistik paa historik
+                    if (!dagensAfsluttedeOrdre.isEmpty()) {
+                        ordreHistorikListe.addAll(dagensAfsluttedeOrdre);
+
+                    }
+
+                    //Vis omsaetning paa forskellige datoer i hele historik (plus dagens afsluttede ordre). Med ugedag.
+                    historikOmsaetningDatoer(ordreHistorikListe);
+
+                    //Vis totale omsaetning for hele historik (og dagens afsluttede ordre)
+                    System.out.printf("Total omsætning:          %10.2f kr.\n(Historik inklusiv dagens afsluttede ordre)\n", historikOmsaetning(ordreHistorikListe));
+
+                    System.out.println("--------------------------------------------------------------------------");
+
+                    //Overskrift
+                    System.out.println("\nAll time (historik inklusiv dagens afsluttede ordre)");
+
+                    //Method til at lave histogram over frekvens af pizzaer og printe med hoejeste foerst
+                    //Alle solgte pizzaer i historik (plus dagens afsluttede ordre)
+                    mestPopulaerePizzaer(ordreHistorikListe);
+
+                    System.out.println("--------------------------------------------------------------------------");
+
+                    //Toem listen da ikke brug for at have hele historik i memory
+                    ordreHistorikListe.clear();
+
+                    break;
+
+                case 7:
+                    //7. Søg efter ordre
+                    Ordre.visAktiveOrdre(aktiveOrdre);
+                    break;
+
+                case 8:
+                    //8. Udlever/annuller ordre
+                    Ordre.udleverOrdre(aktiveOrdre, dagensAfsluttedeOrdre);
+                    break;
+
+                case 10:
+                    //10. Vis Mario liste og tlf numre paa ordre som er klar til udlevering
+
+                    opdaterMarioListe(aktiveOrdre, marioPizzaListe, true);
+                    break;
+                case 11:
+                    //11. Marker pizza på Marios liste som faerdig
+                    markerPizzaSomFaerdig(aktiveOrdre, marioPizzaListe, scanner);
+                    break;
+                case 12:
+                    //12. Gem aktive ordre til egen backup fil
+                    if (!aktiveOrdre.isEmpty()) {
+
+
+                        for (Ordre ordre : aktiveOrdre) {
+
+                            myFileHandler.writeActiveOrderArrayToFile(aktiveOrdre);
+                        }
+
+                    } else {
+                        System.err.println("Ingen ordre at gemme til fil");
+                    }
+                    break;
+                case 13:
+                    //13. Hent aktive ordre fra egen backup fil
+                    try {
+                        //Hent alle ordre objekter fra saeerlige fil til aktive ordre liste ved hjaelp af method i instance af FileIO class
+                        aktiveOrdre = myFileHandler.readAktiveOrdre();
+                    } catch (NullPointerException e) {
+                        System.err.println("Der er ingen fil at læse");
+                    }
+
+//                    //temp loop til at goere inlaese aktive ordre til afsluttede for at lave dummies
+//                    for (int i = 0; i < aktiveOrdre.size(); i++) {
+//                        aktiveOrdre.get(i).setErAfsluttet(true);
+//                        dagensAfsluttedeOrdre.add(aktiveOrdre.get(i));
+//
+//                    }
+
+
+                    break;
+
+                case 14:
+                    //14. Gem dagens afsluttede ordre til egen backup fil
+
+
+                    if (!aktiveOrdre.isEmpty()) {
+
+
+                        for (Ordre ordre : aktiveOrdre) {
+
+                            if (myFileHandler != null) {
+                                myFileHandler.writeDagensAfsluttedeOrdre(aktiveOrdre);
+                            } else {
+                                System.err.println("Filehandler error");
+                            }
+                        }
+
+
+                    } else {
+                        System.err.println("Ingen ordre at gemme til fil");
+                    }
 
 
         //Hent dagens afsluttede ordre fra egen fil til hvis program har vaeret afsluttet uventet
@@ -82,6 +304,12 @@ public class Main {
         } else {
             System.err.println("Filehandler error");
         }
+                    //Hent alle ordre objekter fra saeerlige fil til dagens afsluttede ordre liste ved hjaelp af method i instance af FileIO class
+                    if (myFileHandler != null) {
+                        dagensAfsluttedeOrdre = myFileHandler.readDagensAfsluttedeOrdre();
+                    } else {
+                        System.err.println("Filehandler error");
+                    }
 
 
 
@@ -402,5 +630,4 @@ public class Main {
 
     }
 }
-
 

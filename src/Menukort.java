@@ -1,6 +1,5 @@
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Scanner;
 
@@ -10,10 +9,103 @@ public class Menukort {
 
     public static void main(String[] args) {
 
-//        redigerMenu();
+        redigerMenu();
 
     }
 
+    public static void redigerMenu() {
+
+        Scanner scanner = new Scanner(System.in);
+        boolean videre = false;
+        boolean hovedmenu = false;
+
+        while (true) {
+
+            System.out.println("1: Rediger menukort");
+            System.out.println("2: Rediger ingredienser");
+            System.out.println("3: Vend tilbage til hovedmenu");
+            System.out.println("Vælg en mulighed");
+
+            try {
+
+                int choice = scanner.nextInt();
+
+                switch (choice) {
+                    case 1:
+
+                        while (true) {
+
+                            System.out.println("1: Tilføj pizza");
+                            System.out.println("2: Slet pizza");
+                            System.out.println("3: Vis menukort");
+                            System.out.println("4: Tilbage til rediger menu");
+                            System.out.println("Vælg en mulighed");
+
+                            try {
+
+                                choice = scanner.nextInt();
+
+                                switch (choice) {
+                                    case 1:
+                                        opretPizza(getIngredienser(), getMenu());
+                                        videre = true;
+                                        break;
+                                    case 2:
+                                        sletPizza(getMenu(), getIngredienser());
+                                        videre = true;
+                                        break;
+                                    case 3:
+                                        visSorteretMenu(getMenu());
+                                        break;
+                                    case 4:
+                                        videre = true;
+                                        break;
+                                    default:
+                                        System.err.println("Indtast venligst en gyldig mulighed");
+                                        break;
+
+                                }
+
+                            } catch (Exception e) {
+                                System.err.println("Indtast venligst en gyldig mulighed");
+                                scanner.nextLine();
+                            }
+
+                            if (videre) {
+                                break;
+                            }
+
+                        }
+                        break;
+                    case 2:
+                        scanner.nextLine();
+                        ingrediensBrugerMenu(scanner);
+                        break;
+
+                    case 3:
+                        hovedmenu = true;
+                        break;
+
+                    default:
+                        System.out.println("Indtast venligst en gyldig mulighed");
+                        break;
+                }
+
+
+
+            } catch (Exception e) {
+                System.err.println("Indtast venligst et tal");
+                scanner.nextLine();
+            }
+
+            if (hovedmenu) {
+                break;
+            }
+//        redigerMenu();
+
+        }
+
+    }
 
     //Method to add the pizzas to the menu ArrayList from the Menu.txt file.
     public static ArrayList getMenu() {
@@ -47,7 +139,7 @@ public class Menukort {
                 String kommentar = split[split.length - 1].trim();
 
                 //All the variables are used in creating a new pizza object.
-                menu.add(new Pizza(parseInt(nummer), navn, Double.parseDouble(pris), ingredienser, kommentar));
+                menu.add(new Pizza(parseInt(nummer), navn, parseInt(pris), ingredienser, kommentar));
 
 
             }
@@ -84,7 +176,7 @@ public class Menukort {
         Scanner scanner = new Scanner(System.in);
 
         int nummer = 0;
-        double pris = 0.0;
+        int pris = 0;
         int answer = 0;
         int input = 0;
         String navn = "";
@@ -177,13 +269,13 @@ public class Menukort {
 
         while (true) {
 
-            if (scanner.hasNextDouble()) {
+            if (scanner.hasNextInt()) {
 
-                pris = scanner.nextDouble();
+                pris = scanner.nextInt();
 
                 for (int i = 0; i < menu.size(); i++) {
 
-                    if (pris < 0.0) {
+                    if (pris < 1) {
                         System.out.println("Tallet er negativt. Vælg venligst et andet");
                         ifNegative = false;
                         ifNextLine = false;
@@ -419,7 +511,6 @@ public class Menukort {
 
     public static void visIngredienser(ArrayList<String> ingredienser) {
 
-        Collections.sort(ingredienser);
         System.out.println("Ingrediensliste:");
         for (String ingrediens : ingredienser) {
             // Udskriver ingredienser
@@ -444,7 +535,52 @@ public class Menukort {
         }
     }
 
+    public static void ingrediensBrugerMenu(Scanner scanner) {
+        ArrayList<String> ingredienser = getIngredienser();
+        visIngredienser(ingredienser);
 
+        boolean redigerVidere = false;
+
+        while (!redigerVidere) {
+            System.out.println("\n1. Tilføj ny ingrediens");
+            System.out.println("2. Slet ingrediens fra listen");
+            System.out.println("3. Vis ingrediensliste");
+            System.out.println("4. Tilbage til Rediger menu");
+            System.out.println("5. Tilbage til Hovedmenu");
+
+            switch (HelpMethods.getValgInt(0, 8, false, scanner)) {
+                case 0:
+                    //0. Exit uden at gennemføre ændring
+                    //juster flag til afslutte og returnere ordre
+                    redigerVidere = true;
+                    break;
+
+                case 1:
+                    //1. tilføj ny ingrediens til arrayList
+                    tilfoejIngrediens(ingredienser, scanner);
+                    break;
+
+                case 2:
+                    //2. slet ingrediens fra listen
+                    sletIngrediens(ingredienser, scanner);
+                    break;
+
+                case 3:
+                    //3. vis ingredienslisten
+                    visIngredienser(ingredienser);
+                    break;
+
+                case 4:
+                    //4. naviger til rediger menu
+
+
+                case 5:
+                    //5. naviger til hovedmenu
+                    Main.run();
+
+            }
+        }
+    }
 
 
     //Tilføj ingrediens til ingrediens ArrayList
