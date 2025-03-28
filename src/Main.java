@@ -271,33 +271,33 @@ public class Main {
                     //14. Gem dagens afsluttede ordre til egen backup fil
 
 
-                        if (!aktiveOrdre.isEmpty()) {
+                    if (!aktiveOrdre.isEmpty()) {
 
 
-                            for (Ordre ordre : aktiveOrdre) {
+                        for (Ordre ordre : aktiveOrdre) {
 
-                                if (myFileHandler != null) {
-                                    myFileHandler.writeDagensAfsluttedeOrdre(aktiveOrdre);
-                                } else {
-                                    System.err.println("Filehandler error");
-                                }
+                            if (myFileHandler != null) {
+                                myFileHandler.writeDagensAfsluttedeOrdre(aktiveOrdre);
+                            } else {
+                                System.err.println("Filehandler error");
                             }
-
-
-                        } else {
-                            System.err.println("Ingen ordre at gemme til fil");
                         }
+
+
+                    } else {
+                        System.err.println("Ingen ordre at gemme til fil");
+                    }
 
                     break;
                 case 15:
                     //15. Hent dagens afsluttede ordre fra egen backup fil
 
-                        //Hent alle ordre objekter fra saeerlige fil til dagens afsluttede ordre liste ved hjaelp af method i instance af FileIO class
-                        if (myFileHandler != null) {
-                            dagensAfsluttedeOrdre = myFileHandler.readDagensAfsluttedeOrdre();
-                        } else {
-                            System.err.println("Filehandler error");
-                        }
+                    //Hent alle ordre objekter fra saeerlige fil til dagens afsluttede ordre liste ved hjaelp af method i instance af FileIO class
+                    if (myFileHandler != null) {
+                        dagensAfsluttedeOrdre = myFileHandler.readDagensAfsluttedeOrdre();
+                    } else {
+                        System.err.println("Filehandler error");
+                    }
 
                     break;
                 case 16:
@@ -949,5 +949,4 @@ public class Main {
 
     }
 }
-
 
