@@ -6,13 +6,13 @@ public class Pizza implements Serializable {
     //Declaring variables in Pizza
     int nummer;
     String navn;
-    int pris;
+    double pris;
     String[] ingredienser;
     String kommentar;
     boolean pizzaFaerdig;
 
     //Adding constructor for pizza
-    public Pizza(int nummer, String navn, int pris, String[] ingredienser, String comment) {
+    public Pizza(int nummer, String navn, double pris, String[] ingredienser, String comment) {
 
         this.nummer = nummer;
         this.navn = navn;
@@ -64,7 +64,7 @@ public class Pizza implements Serializable {
         this.navn = navn;
     }
 
-    public int getPris() {
+    public double getPris() {
         return pris;
     }
 
@@ -101,8 +101,8 @@ public class Pizza implements Serializable {
         StringBuilder string = new StringBuilder();
 
         //Adding number and name to string
-        string.append(nummer + ": " + navn);
-
+//        string.append(nummer + ": " + navn);
+        string.append(String.format("%2d: %s", nummer, navn));
         //Adding a gap between number and name, and the ingredients.
         while(0 < 32 - string.length()) {
             string.append(" ");
@@ -128,7 +128,7 @@ public class Pizza implements Serializable {
         }
 
         //Adding price and currency
-        string.append(pris + " kr.");
+        string.append(String.format("%3.2f kr.", pris));
 
         //Adding Klar eller ingenting alt efter om pizza er bagt faerdig
         string.append((pizzaFaerdig) ? "  Klar" : "");

@@ -10,7 +10,7 @@ public class FileIO {
     //throws goer at man ikke kan skabe nyt objekt af FileIO uden at tilfoeje try/catch blocks
     public FileIO() throws IOException {
         //Har bare vaeret brugt til debugging. Skal maaske fjernes
-        System.out.println("FileIO object til filhaandeting instantiated");
+//        System.out.println("FileIO object til filhaandeting instantiated");
     }
 
     //Tilfoejer et ordre objekt til fil
@@ -58,11 +58,16 @@ public class FileIO {
 
         //Declare ObjectInputStream uden for loop
         ObjectInputStream Oout = null;
+        FileInputStream Fin = null;
 
         try {
             //Aaben stream til fil for at modtage bytes
-            FileInputStream Fin = new FileInputStream("testOrdreHistorik1");
 
+            try {
+                Fin = new FileInputStream("testOrdreHistorik1");
+            } catch (FileNotFoundException e) {
+                System.err.println("Filen findes ikke");
+            }
             //Aaben ObjectInputStream til at laese helt objekt af ordre
             Oout = new ObjectInputStream(Fin);
 
@@ -102,6 +107,15 @@ public class FileIO {
 
         //returner ordreliste med alle ordre fra filen
         return ordreList;
+    }
+
+    public void deleteHistorikOrdreFile() {
+        File fileDeleter = new File("testOrdreHistorik1");
+        if (fileDeleter.exists()) {
+            if (!fileDeleter.delete()) {
+                System.err.println("error deleting file historik ordre");
+            }
+        }
     }
 
     //Tilfoejer aktive ordre til egen backup fil
@@ -166,8 +180,8 @@ public class FileIO {
             Fin.close();
 
         } catch (IOException | ClassNotFoundException e) {
-            System.err.println("Laesefejl fra aktive ordre backup-fil. Eller inkompatible objekter");
-            e.printStackTrace();
+            //System.err.println("Laesefejl fra dagens uafsluttede ordre backup-fil. Manglende fil, eller inkompatible objekter");
+            //e.printStackTrace();
         }
 
         try {
@@ -184,6 +198,16 @@ public class FileIO {
 
         //returner ordreliste med alle ordre fra filen
         return aktiveOrdreList;
+    }
+
+    public void deleteUafsluttedeOrdreFile() {
+        File fileDeleter = new File("aktiveOrdreArrayBackup");
+
+        if (fileDeleter.exists()) {
+            if (!fileDeleter.delete()) {
+                System.err.println("error deleting file uafsluttede ordre backup");
+            }
+        }
     }
 
 
@@ -249,8 +273,8 @@ public class FileIO {
             Fin.close();
 
         } catch (IOException | ClassNotFoundException e) {
-            System.err.println("Laesefejl fra dagens afsluttede ordre backup-fil. Eller inkompatible objekter");
-            e.printStackTrace();
+            //System.err.println("Laesefejl fra dagens afsluttede ordre backup-fil. Manglende fil, eller inkompatible objekter");
+            //e.printStackTrace();
         }
 
         try {
@@ -267,6 +291,15 @@ public class FileIO {
 
         //returner ordreliste med alle ordre fra filen
         return dagensAfsluttedeOrdre;
+    }
+
+    public void deleteafsluttedeOrdreFile() {
+        File fileDeleter = new File("afsluttedeOrdreArrayBackup");
+        if (fileDeleter.exists()) {
+            if (!fileDeleter.delete()) {
+                System.err.println("error deleting file afsluttede ordre backup");
+            }
+        }
     }
 
 

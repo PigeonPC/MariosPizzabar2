@@ -189,15 +189,15 @@ public class HelpMethods {
                 }
 
                 //Tjek om pizzanummer gaar ud over pizza menuens range af numre
-                if (arrayPizzaValg[i][0] > pizzaMenuUdvalg.size() || arrayPizzaValg[i][0] < 1) {
+                if (!tjekOmMenuHarPizzaNummer(pizzaMenuUdvalg, arrayPizzaValg[i][0])) {
                     flagPizzaFindes = false;
-                } else {
-                    //Tjek om plads i pizza menu er null. Rest fra da vi havde faste pladser i pizzamenu med null mellem
-                    if (pizzaMenuUdvalg.get(arrayPizzaValg[i][0]-1) != null) {
-
-                    } else {
-                        flagPizzaFindes = false;
-                    }
+//                } else {
+//                    //Tjek om plads i pizza menu er null. Rest fra da vi havde faste pladser i pizzamenu med null mellem
+//                    if (pizzaMenuUdvalg.get(arrayPizzaValg[i][0]-1) != null) {
+//
+//                    } else {
+//                        flagPizzaFindes = false;
+//                    }
                 }
 
 
@@ -370,6 +370,33 @@ public class HelpMethods {
         }
 
         return weekday;
+    }
+
+    public static boolean tjekOmMenuHarPizzaNummer(ArrayList<Pizza> menuPizzaUdvalg, int pizzaNummer) {
+        boolean flagMenuHarDettePizzaNummer = false;
+
+        for (Pizza pizza : menuPizzaUdvalg) {
+            if (pizza.getNummer() == pizzaNummer) {
+                flagMenuHarDettePizzaNummer = true;
+                break;
+            }
+        }
+
+        return flagMenuHarDettePizzaNummer;
+    }
+
+    //Returnerer index i menu ud fra pizzanummer. -1 hvis ikke findes
+    public static int getMenuIndexUdFraPizzaNummer(ArrayList<Pizza> menuPizzaUdvalg, int pizzaNummer) {
+
+
+        for (int i = 0; i < menuPizzaUdvalg.size(); i++) {
+            if (menuPizzaUdvalg.get(i).getNummer() == pizzaNummer) {
+                return i;
+            }
+        }
+
+        System.err.println("Pizza nr findes ikke i menu");
+        return -1;
     }
 
 

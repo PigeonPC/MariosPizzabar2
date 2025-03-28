@@ -224,7 +224,7 @@ public class Ordre implements Serializable {
 
     //Udlever/annuller ordre
 
-    public static void udleverOrdre(ArrayList<Ordre> aktiveOrdre, ArrayList<Ordre> dagensAfsluttedeOrdre) {
+    public static void udleverOrdre(ArrayList<Ordre> aktiveOrdre, ArrayList<Ordre> dagensAfsluttedeOrdre, FileIO myFileHandler) {
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("Indtast tlf nummer tilknyttet ordren:");
@@ -237,7 +237,7 @@ public class Ordre implements Serializable {
 
                 System.out.println("Resultat fundet: " + aktiveOrdre.get(i).getTlfNummerKunde());
                 System.out.println(aktiveOrdre.get(i));
-                System.out.println("Bekræft betaling (1) ja, (2) nej, (3) tilbage: ");
+                System.out.println("Bekræft betaling (1) ja, (2) slet ordren (3) tilbage: ");
 
                 int valg = HelpMethods.getValgInt(1, 3, false, scanner);
 
@@ -250,6 +250,7 @@ public class Ordre implements Serializable {
                 } else if (valg ==2){
                     System.out.println("Betaling afbrudt");
                     aktiveOrdre.remove(i);
+
 
 
                 } else if(valg ==3) {

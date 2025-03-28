@@ -1,31 +1,32 @@
-1, MARGHERITA, 80, Tomatsauce, mozzarella, null
-2, STROMBOLI, 90, Tomatsauce, mozzarella, italiensk kogt skinke, null
-3, LA PAZZA, 100, Tomatsauce, mozzarella, italiensk kogt skinke, ananas, null
-4, QUATTRO STAGIONI, 110, Tomatsauce, mozzarella, italiensk kogt skinke, artiskok, champignon, kæmperejer, null
-5, CAPRICCIOSA, 105, Tomatsauce, mozzarella, italiensk kogt skinke, taggiascheoliven, champignon, null
-6, SALAMINO, 90, Tomatsauce, mozzarella, pepperoni, null
-7, AMATRICIANA, 110, Tomatsauce, mozzarella, pancetta, løg, parmesan, pecorino, chiliolie, null
-8, CAPRINO, 110, Tomatsauce, mozzarella, pancetta, gedeost, løg, null
-9, POPEYE, 105, Tomatsauce, mozzarella, pancetta, spinat, gorgonzola, null
-10, DIAVOLA, 105, Tomatsauce, mozzarella, kylling, grillet peberfrugt, chili, null
-11, LIGABUE, 110, Tomatsauce, mozzarella, kylling, pancetta, rucola, null
-12, PAESANA, 110, Tomatsauce, mozzarella, salsiccia, broccoli, hvidløg, null
-13, PANCHOVILLA, 110, Tomatsauce, mozzarella, salsiccia, blandede skovsvampe, null
-14, VALTELLINA, 115, Tomatsauce, mozzarella, bresaola, rucola, parmesan, soltørret tomat, null
-15, GUSTOSA, 110, Tomatsauce, mozzarella, bresaola, ricotta, artiskok, null
-16, EMILIANA, 115, Tomatsauce, mozzarella, lufttørret skinke, rucola, soltørret tomat, parmesan, null
-17, SAPORITA, 110, Tomatsauce, mozzarella, lufttørret skinke, gorgonzola, null
-18, TIROLESE, 110, Tomatsauce, mozzarella, røget skinke, gedeost, soltørret tomat, null
-19, VIAGRA, 105, Tomatsauce, mozzarella, stærk salami, frisk chili, chiliolie, null
-20, NEK, 110, Tomatsauce, mozzarella, stærk salami, gorgonzola, rucola, null
-21, LITFIBA, 110, Tomatsauce, mozzarella, oksekødstrimler, gorgonzola, champignon, null
-22, MUCCA PAZZA, 110, Tomatsauce, mozzarella, oksekødstrimler, rucola, parmesan, null
-23, PORCO, 110, Tomatsauce, mozzarella, pulled pork, løg, balsamico, null
-24, ITALIANA, 105, Tomatsauce, mozzarella, løg, bolognese, parmesan, null
-25, NOSTROMO, 105, Tomatsauce, mozzarella, tun, peberfrugt, løg, chiliolie, null
-26, NAPOLETANA, 105, Tomatsauce, mozzarella, ansjoser, taggiascheoliven, kapers, null
-27, BOSCAIOLA, 100, Tomatsauce, mozzarella, blandede skovsvampe, trøffel, null
-28, GENOVESE, 100, Tomatsauce, mozzarella, kartofler, soltørret tomat, pesto, null
-29, TRICOLORE, 100, Tomatsauce, mozzarella, spinat, soltørret tomat, parmesan, null
-30, ORTOLANA, 110, Tomatsauce, mozzarella, grillet squash, grillet aubergine, artiskok, grillet peberfrugt, null
-31, PARMIGIANA, 105, Tomatsauce, mozzarella, grillet aubergine, parmesan, pesto, null
+1, MARGHERITA, 80.0, Tomatsauce, mozzarella, null
+2, STROMBOLI, 90.0, Tomatsauce, mozzarella, italiensk kogt skinke, null
+3, LA PAZZA, 100.0, Tomatsauce, mozzarella, italiensk kogt skinke, ananas, null
+4, QUATTRO STAGIONI, 110.0, Tomatsauce, mozzarella, italiensk kogt skinke, artiskok, champignon, kæmperejer, null
+5, CAPRICCIOSA, 105.0, Tomatsauce, mozzarella, italiensk kogt skinke, taggiascheoliven, champignon, null
+6, SALAMINO, 90.0, Tomatsauce, mozzarella, pepperoni, null
+7, AMATRICIANA, 110.0, Tomatsauce, mozzarella, pancetta, løg, parmesan, pecorino, chiliolie, null
+8, CAPRINO, 110.0, Tomatsauce, mozzarella, pancetta, gedeost, løg, null
+9, POPEYE, 105.0, Tomatsauce, mozzarella, pancetta, spinat, gorgonzola, null
+10, DIAVOLA, 105.0, Tomatsauce, mozzarella, kylling, grillet peberfrugt, chili, null
+11, LIGABUE, 110.0, Tomatsauce, mozzarella, kylling, pancetta, rucola, null
+12, PAESANA, 110.0, Tomatsauce, mozzarella, salsiccia, broccoli, hvidløg, null
+13, PANCHOVILLA, 110.0, Tomatsauce, mozzarella, salsiccia, blandede skovsvampe, null
+14, VALTELLINA, 115.0, Tomatsauce, mozzarella, bresaola, rucola, parmesan, soltørret tomat, null
+15, GUSTOSA, 110.0, Tomatsauce, mozzarella, bresaola, ricotta, artiskok, null
+16, EMILIANA, 115.0, Tomatsauce, mozzarella, lufttørret skinke, rucola, soltørret tomat, parmesan, null
+17, SAPORITA, 110.0, Tomatsauce, mozzarella, lufttørret skinke, gorgonzola, null
+18, TIROLESE, 110.0, Tomatsauce, mozzarella, røget skinke, gedeost, soltørret tomat, null
+19, VIAGRA, 105.0, Tomatsauce, mozzarella, stærk salami, frisk chili, chiliolie, null
+20, NEK, 110.0, Tomatsauce, mozzarella, stærk salami, gorgonzola, rucola, null
+21, LITFIBA, 110.0, Tomatsauce, mozzarella, oksekødstrimler, gorgonzola, champignon, null
+22, MUCCA PAZZA, 110.0, Tomatsauce, mozzarella, oksekødstrimler, rucola, parmesan, null
+23, PORCO, 110.0, Tomatsauce, mozzarella, pulled pork, løg, balsamico, null
+24, ITALIANA, 105.0, Tomatsauce, mozzarella, løg, bolognese, parmesan, null
+25, NOSTROMO, 105.0, Tomatsauce, mozzarella, tun, peberfrugt, løg, chiliolie, null
+26, NAPOLETANA, 105.0, Tomatsauce, mozzarella, ansjoser, taggiascheoliven, kapers, null
+27, BOSCAIOLA, 100.0, Tomatsauce, mozzarella, blandede skovsvampe, trøffel, null
+28, GENOVESE, 100.0, Tomatsauce, mozzarella, kartofler, soltørret tomat, pesto, null
+29, TRICOLORE, 100.0, Tomatsauce, mozzarella, spinat, soltørret tomat, parmesan, null
+30, ORTOLANA, 110.0, Tomatsauce, mozzarella, grillet squash, grillet aubergine, artiskok, grillet peberfrugt, null
+31, PARMIGIANA, 105.0, Tomatsauce, mozzarella, grillet aubergine, parmesan, pesto, null
+33, MAESTRO, 46.0, Tun, Grillet peberfrugt, Bolognese, Soltørret tomat, null
