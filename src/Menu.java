@@ -393,6 +393,7 @@ public class Menu {
                         if (tempValg != 0) {
 
                             tempOrdre.ordrePizzaListe.remove(tempValg - 1);
+                            tempOrdre.opdaterTotalPrisOrdre();
                         }
                     }
 

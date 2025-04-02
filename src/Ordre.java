@@ -237,26 +237,38 @@ public class Ordre implements Serializable {
 
                 System.out.println("Resultat fundet: " + aktiveOrdre.get(i).getTlfNummerKunde());
                 System.out.println(aktiveOrdre.get(i));
-                System.out.println("Bekræft betaling (1) ja, (2) slet ordren (3) tilbage: ");
 
-                int valg = HelpMethods.getValgInt(1, 3, false, scanner);
-
-                if (valg ==1) {
-                    aktiveOrdre.get(i).setErAfsluttet(true);
-                    dagensAfsluttedeOrdre.add(aktiveOrdre.remove(i));
-                    System.out.println("Betaling gennemført, udlever ordre");
+                if (aktiveOrdre.get(i).ordreHarUfaerdigePizza()) {
+                    System.out.println("Ikke klar til udlevering endnu. Ordren er ikke faerdig.");
+                    System.out.println("Indtast hvad som helst for at vende tilbage til menu");
+                    scanner.nextLine();
 
 
-                } else if (valg ==2){
-                    System.out.println("Betaling afbrudt");
-                    aktiveOrdre.remove(i);
+                } else {
+
+                    System.out.println("Bekræft betaling (1) ja, (2) slet ordren (3) tilbage: ");
+
+                    int valg = HelpMethods.getValgInt(1, 3, false, scanner);
+
+                    if (valg ==1) {
+                        aktiveOrdre.get(i).setErAfsluttet(true);
+                        dagensAfsluttedeOrdre.add(aktiveOrdre.remove(i));
+                        System.out.println("Betaling gennemført, udlever ordre");
+
+
+                    } else if (valg ==2){
+                        System.out.println("Betaling afbrudt");
+                        aktiveOrdre.remove(i);
 
 
 
-                } else if(valg ==3) {
-                    break;
+                    } else if(valg ==3) {
+                        break;
+
+                    }
 
                 }
+
 
             } else {
                 System.out.println("Telefonnummeret findes ikke på listen");
